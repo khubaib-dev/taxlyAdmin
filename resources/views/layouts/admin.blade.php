@@ -75,7 +75,7 @@
                             aria-expanded="false">
 
                             <span class="avatar"><img class="round"
-                                    src="{{ asset('app-assets/images/portrait/small/avatar-s-4.jpg')}}" alt="avatar"
+                                    src="{{ asset('app-assets/images/portrait/small/avatar-s-.jpg')}}" alt="avatar"
                                     height="40" width="40"><span class="avatar-status-online"></span></span>
                             <div class="user-nav d-sm-flex d-none"><span class="user-name font-weight-bolder ml-1">{{ auth()->guard('admin')->user()->name }}</span><span class="user-status">Admin</span></div>
                         </a>
@@ -208,7 +208,7 @@
                         <span class="brand-logo">
                             <img src="{{ asset('app-assets/images/logo/logo.png') }}">
                         </span>
-                        <h2 class="brand-text">Bucchi's</h2>
+                        <h2 class="brand-text">Taxly</h2>
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i
                             class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i

@@ -26,5 +26,6 @@ Route::middleware(['auth.admin'])->group(function () {
     Route::get('logout',[AuthController::class , 'logout'])->name('logout');
     Route::prefix('admin')->group(function () {
         Route::get('/',[AdminController::class, 'index'])->name('adminDashboard');
+        Route::get('/delete/{id}/{aMemberId}',[AdminController::class, 'delete'])->name('UserDelete');
     });
 });

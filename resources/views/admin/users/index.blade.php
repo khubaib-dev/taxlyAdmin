@@ -35,12 +35,12 @@
                                             <tbody>
                                                 @foreach ($users as $user)
                                                     <tr>
-                                                        <td class="text-center">{{ $user->fname }}</td>
-                                                        <td class="text-center">{{ $user->lname }}</td>
-                                                        <td class="text-center">{{ $user->email }}</td>
+                                                        <td class="text-center">{{ $user['fname'] }}</td>
+                                                        <td class="text-center">{{ $user['lname'] }}</td>
+                                                        <td class="text-center">{{ $user['email'] }}</td>
                                                         <td class="text-center"><div class="btn-group">
-                                                            <button class="btn btn-primary"><i class="fa fa-pencil"></i></button>    
-                                                            <button class="btn btn-danger"><i class="fa fa-trash"></i></button>    
+                                                            {{-- <button class="btn btn-primary"><i class="fa fa-pencil"></i></button>     --}}
+                                                            <a href="{{ route('UserDelete',['id' => $user->id,'aMemberId' => $user['user_id']]) }}" class="btn btn-danger"><i class="fa fa-trash"></i></a>    
                                                         </div></td>
                                                     </tr>
                                                 @endforeach
