@@ -10,4 +10,9 @@ class ChartOfAccount extends Model
     use HasFactory;
 
     protected $table = 'chart_of_account';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'category', 'parent_id', 'code'
+    ];
 }

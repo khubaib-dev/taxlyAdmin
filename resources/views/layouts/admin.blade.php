@@ -246,11 +246,11 @@
                             class="fa fa-user" style="color:  #6610F2" aria-hidden="true"></i><span
                             class="menu-title text-truncate" data-i18n="Email">Users</span></a>
                 </li>
-                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
+                <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('showCOA',['id' => 0]) }}"><i
                             class="fa fa-briefcase" style="color:  #6610F2" aria-hidden="true"></i><span
                             class="menu-title text-truncate" data-i18n="Email">COA</span></a>
                 </li>
-                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
+                <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('showCriteria') }}"><i
                             class="fa fa-tasks" style="color:  #6610F2" aria-hidden="true"></i><span
                             class="menu-title text-truncate" data-i18n="Email">Criteria</span></a>
                 </li>
