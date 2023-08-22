@@ -151,8 +151,12 @@
     $(document).ready(function() {
     $('#criteria-table').DataTable({
         // Replace "1" with the index of the column you want to make orderable (in this case, it's the second column, so index 1)
-        "order": [[1, "asc"]],
+        "order": [[0, "asc"]],
         "columnDefs": [
+            {
+                "targets": [1],
+                "orderable": false
+            },
             {
                 "targets": [2],
                 "orderable": false
