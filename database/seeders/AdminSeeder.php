@@ -22,5 +22,14 @@ class AdminSeeder extends Seeder
                 'role' => 0
             ]);
         }
+        if(Admin::whereRole(1)->count() == 0)
+        {
+            Admin::updateOrCreate([
+                'name' => 'CPA',
+                'email' => 'cpa@gmail.com',
+                'password' => bcrypt(123456),
+                'role' => 1
+            ]);
+        }
     }
 }

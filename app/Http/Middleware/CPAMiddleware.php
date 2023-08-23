@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class CPAMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::guard('admin')->check()) {
+        if (Auth::guard('admin')->check() && auth()->guard('admin')->user()->role == 1) {
             $response = $next($request);
             return $response->header('Cache-Control','nocache, no-store, max-age=0, must-revalidate')
                 ->header('Pragma','no-cache')

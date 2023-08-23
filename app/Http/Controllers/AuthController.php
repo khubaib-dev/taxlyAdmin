@@ -17,7 +17,14 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if(Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->route('adminDashboard');
+            if(auth()->guard('admin')->user()->role == 0)
+            {
+                return redirect()->route('adminDashboard');
+            }
+            elseif(auth()->guard('admin')->user()->role == 1)
+            {
+                return redirect()->route('showCOA',['id' => 0]);
+            }
         }
         return redirect()->back()->withError('Wrong Credentials');
         

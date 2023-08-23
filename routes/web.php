@@ -22,10 +22,9 @@ Route::middleware(['auth.login'])->group(function () {
     Route::get('/',[AuthController::class , 'index'])->name('loginForm');
     Route::post('/authenticate',[AuthController::class , 'authLogin'])->name('authLogin');
 });
-
+Route::get('logout',[AuthController::class , 'logout'])->name('logout');
 
 Route::middleware(['auth.admin'])->group(function () {
-    Route::get('logout',[AuthController::class , 'logout'])->name('logout');
     Route::prefix('admin')->group(function () {
         Route::get('/',[AdminController::class, 'index'])->name('adminDashboard');
         Route::get('/delete/{id}/{aMemberId}',[AdminController::class, 'delete'])->name('UserDelete');

@@ -242,10 +242,12 @@
                         
                     </ul>
                 </li> --}}
-                <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('adminDashboard') }}"><i
-                            class="fa fa-user" style="color:  #6610F2" aria-hidden="true"></i><span
-                            class="menu-title text-truncate" data-i18n="Email">Users</span></a>
-                </li>
+                @if(auth()->guard('admin')->user()->role == 0)
+                    <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('adminDashboard') }}"><i
+                                class="fa fa-user" style="color:  #6610F2" aria-hidden="true"></i><span
+                                class="menu-title text-truncate" data-i18n="Email">Users</span></a>
+                    </li>
+                @endif
                 <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('showCOA',['id' => 0]) }}"><i
                             class="fa fa-briefcase" style="color:  #6610F2" aria-hidden="true"></i><span
                             class="menu-title text-truncate" data-i18n="Email">COA</span></a>
