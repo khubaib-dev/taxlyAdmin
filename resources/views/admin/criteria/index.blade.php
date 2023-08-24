@@ -45,7 +45,7 @@
                                                                     onclick="editor('{{ $criteria->id }}','{{ $criteria->name }}','{{ $criteria->values }}')"
                                                                     class="btn btn-primary"><i
                                                                         class="fa fa-pencil"></i></button>
-                                                                <a href="{{ route('deleteCriteria',['id' => $criteria->id]) }}"
+                                                                <a onclick="return confirm('Are you sure you want to delete criteria')" href="{{ route('deleteCriteria',['id' => $criteria->id]) }}"
                                                                     class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                                             </div>
                                                         </td>
@@ -81,7 +81,7 @@
                                     <div class="form-group">
                                         <label for="criteriaCode">Criteria Code</label>
                                         <input type="text" name="criteriaCode" id="criteriaCode" class="form-control"
-                                            placeholder="Enter Criteria Code" required>
+                                            placeholder="Enter Criteria Code with comma(,) seperation" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -116,7 +116,7 @@
                                     <div class="form-group">
                                         <label for="criteriaCodeUpdate">Criteria Code</label>
                                         <input type="text" name="criteriaCode" id="criteriaCodeUpdate"
-                                            class="form-control" placeholder="Enter Criteria Code" required>
+                                            class="form-control" placeholder="Enter Criteria Code with comma(,) seperation" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">

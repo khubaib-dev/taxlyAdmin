@@ -1,6 +1,10 @@
 @extends('layouts.admin')
 @section('style')
-
+<style>
+    .breadcrumb-item{
+        font-size: 10px
+    }
+</style>
 @endsection
 
 @section('content')
@@ -19,9 +23,22 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="card card-company-table">
                             <h3 class="text-center mt-1">Chart of Account</h3>
-                            <button data-toggle="modal" data-target="#addCoa"
-                                class="btn btn-success d-block ml-auto mr-1"> <i class="fa fa-plus"></i> Add
-                                New</button>
+                            <div class="row p-2">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        @foreach ($array as $page)
+                                            @if(--$counter > 0)
+                                            <li class="breadcrumb-item"><a href="{{ route('showCOA',['id' => $page['id']]) }}">{{ $page['cat'] }}</a></li>
+                                            @else
+                                            <li class="breadcrumb-item">{{ $page['cat'] }}</li>
+                                            @endif
+                                        @endforeach
+                                    </ol>
+                                  </nav>
+                                <button data-toggle="modal" data-target="#addCoa"
+                                    class="btn btn-success d-block ml-auto mr-1"> <i class="fa fa-plus"></i> Add
+                                    New</button>
+                            </div>
                             <div class="card-body p-0">
                                 <div class="table-responsive">
                                     <div class="block full p-2">
@@ -49,7 +66,7 @@
                                                         <div class="btn-group">
                                                             <button onclick="editor('{{ $coa->id }}','{{ $coa->category }}','{{ $coa->code }}')" class="btn btn-primary"><i
                                                                     class="fa fa-pencil"></i></button>
-                                                            <a href="{{ route('deleteCOA',['id' => $coa->id]) }}"
+                                                            <a onclick="return confirm('Are you sure you want to delete this COA entry?');" href="{{ route('deleteCOA',['id' => $coa->id]) }}"
                                                                 class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                                         </div>
                                                     </td>

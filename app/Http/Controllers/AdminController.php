@@ -47,6 +47,51 @@ class AdminController extends Controller
         return view('admin.users.index',compact('users'));
     }
 
+    public function settings($id)
+    {
+        $user = User::find($id);
+        $aMemberKey = config('services.aMember')['key'];
+        $url = 'https://backend.taxly.ai/api/check-access/by-login';
+        $payloadAccess = [
+            '_key' => $aMemberKey,
+            'login' => $user->amember_id
+        ];
+        $response = Http::get($url, $payloadAccess);
+        $fullUser = $response->json();
+        if($fullUser['ok'])
+        {
+            $user['name'] = $fullUser['name_f'].' '.$fullUser['name_l'];
+        }
+        else{
+            $user['name'] = 'Name not found';
+        }
+
+        $settings = Setting::where('userId',$id)->first();
+        return view('admin.users.settings',compact('user','settings'));
+    }
+    
+    public function transactions($id)
+    {
+        $user = User::find($id);
+        $aMemberKey = config('services.aMember')['key'];
+        $url = 'https://backend.taxly.ai/api/check-access/by-login';
+        $payloadAccess = [
+            '_key' => $aMemberKey,
+            'login' => $user->amember_id
+        ];
+        $response = Http::get($url, $payloadAccess);
+        $fullUser = $response->json();
+        if($fullUser['ok'])
+        {
+            $user['name'] = $fullUser['name_f'].' '.$fullUser['name_l'];
+        }
+        else{
+            $user['name'] = 'Name not found';
+        }
+        $transactions = Transaction::where('userId',$id)->get();
+        return view('admin.users.transactions',compact('user','transactions'));
+    }
+
     public function delete($id,$aMemberId)
     {
         $user = User::find($id);

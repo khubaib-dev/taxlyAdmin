@@ -18,7 +18,25 @@ class COAController extends Controller
     public function COA($id)
     {
         $coas = ChartOfAccount::whereParentId($id)->get();
-        return view('admin.coa.index',compact('coas','id'));
+        $array = [];
+        $lastId = $id;
+        if($id != 0)
+        {
+            while($lastId > 0)
+            {
+                $parent = ChartOfAccount::find($lastId);
+        
+                if (!$parent) {
+                    break;
+                }
+                
+                $lastId = $parent->parent_id;
+                $array[] = ['cat' => $parent->category,'id' => $parent->id];
+            }
+            $array = array_reverse($array);
+        }
+        $counter = count($array);
+        return view('admin.coa.index',compact('counter','coas','id','array'));
     }
 
     public function delete($id)

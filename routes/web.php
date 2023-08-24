@@ -27,6 +27,8 @@ Route::get('logout',[AuthController::class , 'logout'])->name('logout');
 Route::middleware(['auth.admin'])->group(function () {
     Route::prefix('admin')->group(function () {
         Route::get('/',[AdminController::class, 'index'])->name('adminDashboard');
+        Route::get('/settings/{id}',[AdminController::class, 'settings'])->name('userSetting');
+        Route::get('/transactions/{id}',[AdminController::class, 'transactions'])->name('userTransactions');
         Route::get('/delete/{id}/{aMemberId}',[AdminController::class, 'delete'])->name('UserDelete');
         Route::prefix('COA')->group(function () {
             Route::get('parent/{id}',[COAController::class, 'COA'])->name('showCOA');
