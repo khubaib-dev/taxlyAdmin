@@ -18,7 +18,7 @@
                     <!-- Company Table Card -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="card card-company-table">
-                            <h3 class="text-center mt-1">Criteria List</h3>
+                            <h3 class="text-center mt-1">Occupation List</h3>
                             <button data-toggle="modal" data-target="#addCriteria"
                                 class="btn btn-success d-block ml-auto mr-1"> <i class="fa fa-plus"></i> Add
                                 New</button>
@@ -30,26 +30,20 @@
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">Name</th>
-                                                    <th class="text-center">Occupation</th>
-                                                    <th class="text-center">User Type</th>
-                                                    <th class="text-center">Code</th>
                                                     <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($criterias as $criteria)
+                                                @foreach ($occupations as $occupation)
                                                     <tr>
-                                                        <td class="text-center">{{ $criteria->name }}</td>
-                                                        <td class="text-center">{{ $criteria->occupation }}</td>
-                                                        <td class="text-center">{{ $criteria->user_type }}</td>
-                                                        <td class="text-center">{{ $criteria->values }}</td>
+                                                        <td class="text-center">{{ $occupation->name }}</td>
                                                         <td class="text-center">
                                                             <div class="btn-group">
                                                                 <button
-                                                                    onclick="editor('{{ $criteria->id }}','{{ $criteria->name }}','{{ $criteria->values }}','{{ $criteria->occupation }}','{{ $criteria->user_type }}')"
+                                                                    onclick="editor('{{ $occupation->name }}','{{ $occupation->id }}')"
                                                                     class="btn btn-primary"><i
                                                                         class="fa fa-pencil"></i></button>
-                                                                <a onclick="return confirm('Are you sure you want to delete criteria')" href="{{ route('deleteCriteria',['id' => $criteria->id]) }}"
+                                                                <a onclick="return confirm('Are you sure you want to delete Occupation')" href="{{ route('deleteOccupation',['id' => $occupation->id]) }}"
                                                                     class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                                             </div>
                                                         </td>
@@ -69,37 +63,18 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Add New Criteria</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Add New Occupation</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="{{ route('addCriteria') }}" method="post">
+                            <form action="{{ route('addOccupation') }}" method="post">
                                 @csrf
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label for="criteriaName">Criteria Name</label>
-                                        <input type="text" name="criteriaName" id="criteriaName" class="form-control"
-                                            placeholder="Enter Criteria Name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="occupation">Select Occupation</label>
-                                        <select name="occupation" id="occupation" class="form-control">
-                                            <option selected disabled>Select Occupation</option>
-                                            @foreach ($occupations as $occupation)
-                                                <option value="{{ $occupation->name }}">{{ $occupation->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="user_type">Enter User Type</label>
-                                        <input type="text" name="user_type" id="user_type" class="form-control"
-                                            placeholder="Enter User Type">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="criteriaCode">Criteria Code</label>
-                                        <input type="text" name="criteriaCode" id="criteriaCode" class="form-control"
-                                            placeholder="Enter Criteria Code with comma(,) seperation" required>
+                                        <label for="occupationName">Occupation Name</label>
+                                        <input type="text" name="occupation" id="occupationName"
+                                            class="form-control" placeholder="Enter Occupation Name" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -116,39 +91,20 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Update Criteria</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Update Occupation</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="{{ route('updateCriteria') }}" method="post">
+                            <form action="{{ route('updateOccupation') }}" method="post">
                                 @csrf
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label for="criteriaNameUpdate">Criteria Name</label>
-                                        <input type="text" name="criteriaName" id="criteriaNameUpdate"
-                                            class="form-control" placeholder="Enter Criteria Name" required>
-                                        <input type="hidden" id="criteriaId" name="criteriaId" class="form-control"
+                                        <label for="occupationUpdate">Occupation Name</label>
+                                        <input type="text" name="occupation" id="occupationUpdate"
+                                            class="form-control" placeholder="Enter Occupation Name" required>
+                                        <input type="hidden" id="occupationUpdateId" name="occupationId" class="form-control"
                                             required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="occupation">Select Occupation</label>
-                                        <select name="occupation" id="occupationUpdate" class="form-control">
-                                            <option selected disabled>Select Occupation</option>
-                                            @foreach ($occupations as $occupation)
-                                                <option value="{{ $occupation->name }}">{{ $occupation->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="user_type">Enter User Type</label>
-                                        <input type="text" name="user_type" id="user_type_update" class="form-control"
-                                            placeholder="Enter User Type">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="criteriaCodeUpdate">Criteria Code</label>
-                                        <input type="text" name="criteriaCode" id="criteriaCodeUpdate"
-                                            class="form-control" placeholder="Enter Criteria Code with comma(,) seperation" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -171,14 +127,10 @@
 
 @section('scripts')
 <script>
-    function editor(id,cat,code,occupation,user_type)
+    function editor(name,id)
     {
-        code = code.substring(1, code.length-1)
-        $('#criteriaId').val(id)
-        $('#criteriaNameUpdate').val(cat)
-        $('#criteriaCodeUpdate').val(code)
-        $('#occupationUpdate').val(occupation)
-        $('#user_type_update').val(user_type)
+        $('#occupationUpdateId').val(id)
+        $('#occupationUpdate').val(name)
         $('#updateCriteria').modal('show')
     }
 
@@ -189,10 +141,6 @@
         "columnDefs": [
             {
                 "targets": [1],
-                "orderable": false
-            },
-            {
-                "targets": [2],
                 "orderable": false
             }
         ],

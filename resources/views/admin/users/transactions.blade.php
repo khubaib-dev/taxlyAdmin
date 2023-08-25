@@ -18,7 +18,7 @@
                     <!-- Company Table Card -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="card card-company-table">
-                            <h3 class="text-center mt-1">{{ $user['name'] }} Settings</h3>
+                            <h3 class="text-center mt-1">{{ $user['name'] }} Transactions</h3>
                             <div class="card-body p-0">
                                 <div class="table-responsive">
                                     <div class="block full p-2">

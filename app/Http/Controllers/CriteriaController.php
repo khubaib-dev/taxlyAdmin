@@ -10,6 +10,7 @@ use App\Models\Criterion;
 use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Occupation;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 
@@ -18,8 +19,11 @@ class CriteriaController extends Controller
     public function index()
     {
         $criterias = Criterion::get();
-        return view('admin.criteria.index',compact('criterias'));
+        $occupations = Occupation::get();
+        return view('admin.criteria.index',compact('occupations', 'criterias'));
     }
+
+    
 
     public function delete($id)
     {
@@ -31,6 +35,8 @@ class CriteriaController extends Controller
     {
         Criterion::create([
             'name' => $request->criteriaName,
+            'occupation' => $request->occupation,
+            'user_type' => $request->user_type,
             'values' => '['.$request->criteriaCode.']'
         ]);
         return redirect()->back()->withSuccess('Criteria Added');
@@ -40,6 +46,8 @@ class CriteriaController extends Controller
     {
         Criterion::whereId($request->criteriaId)->update([
             'name' => $request->criteriaName,
+            'occupation' => $request->occupation,
+            'user_type' => $request->user_type,
             'values' => '['.$request->criteriaCode.']'
         ]);
         return redirect()->back()->withSuccess('Criteria Updated');

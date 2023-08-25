@@ -5,14 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Criterion extends Model
+class Occupation extends Model
 {
     use HasFactory;
 
-    protected $table = 'criterion';
-    public $timestamps = false;
-
     protected $fillable = [
-        'name', 'values', 'occupation', 'user_type'
+        'name'
     ];
 }

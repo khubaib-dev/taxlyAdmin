@@ -59,7 +59,7 @@
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static   menu-collapsed" data-open="click"
+<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static   menu-expanded" data-open="click"
     data-menu="vertical-menu-modern" data-col="">
 
     <!-- BEGIN: Header-->
@@ -75,12 +75,12 @@
                             aria-expanded="false">
 
                             <span class="avatar"><img class="round"
-                                    src="{{ asset('app-assets/images/portrait/small/avatar-s-.jpg')}}" alt="avatar"
+                                    src="{{ asset('app-assets/images/portrait/small/avatar-s-11.jpg')}}" alt="avatar"
                                     height="40" width="40"><span class="avatar-status-online"></span></span>
-                            <div class="user-nav d-sm-flex d-none"><span class="user-name font-weight-bolder ml-1">{{ auth()->guard('admin')->user()->name }}</span><span class="user-status">Admin</span></div>
+                            <div class="user-nav d-sm-flex d-none"><span class="user-name font-weight-bolder ml-1">{{ auth()->guard('admin')->user()->name }}</span><span class="user-status">@if(auth()->guard('admin')->user()->role == 0)Admin @else CPA @endif</span></div>
                         </a>
                         <div style="margin-right: -30px" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user"><a
-                                class="dropdown-item" href="#"><i class="mr-50" data-feather="user"></i> Profile</a>
+                                class="dropdown-item" href="{{ route('showProfile') }}"><i class="mr-50" data-feather="user"></i> Profile</a>
 
                             <div class="dropdown-divider">
                             </div>
@@ -200,15 +200,14 @@
 
 
     <!-- BEGIN: Main Menu-->
-    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
-        <div class="navbar-header">
+    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow expanded" data-scroll-to-active="true">
+        <div class="navbar-header expanded">
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item mr-auto"><a class="navbar-brand" href="/">
 
                         <span class="brand-logo">
                             <img src="{{ asset('app-assets/images/logo/logo.png') }}">
                         </span>
-                        <h2 class="brand-text">Taxly</h2>
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i
                             class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i
@@ -256,6 +255,10 @@
                             class="fa fa-tasks" style="color:  #6610F2" aria-hidden="true"></i><span
                             class="menu-title text-truncate" data-i18n="Email">Criteria</span></a>
                 </li>
+                <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('showOccupation') }}"><i
+                            class="fa fa-globe" style="color:  #6610F2" aria-hidden="true"></i><span
+                            class="menu-title text-truncate" data-i18n="Email">Occupations</span></a>
+                </li>
 
                 
 
@@ -293,6 +296,7 @@
     <script src="https://cdn.datatables.net/1.11.0/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+
 
     <script>
         $(window).on('load', function() {

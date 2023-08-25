@@ -6,6 +6,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\COAController;
 use App\Http\Controllers\CriteriaController;
+use App\Http\Controllers\OccupationController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,10 @@ Route::get('logout',[AuthController::class , 'logout'])->name('logout');
 
 Route::middleware(['auth.admin'])->group(function () {
     Route::prefix('admin')->group(function () {
+        Route::prefix('profile')->group(function () {
+            Route::get('/',[ProfileController::class, 'index'])->name('showProfile');
+            Route::post('/update',[ProfileController::class, 'update'])->name('updateProfile');
+        });
         Route::get('/',[AdminController::class, 'index'])->name('adminDashboard');
         Route::get('/settings/{id}',[AdminController::class, 'settings'])->name('userSetting');
         Route::get('/transactions/{id}',[AdminController::class, 'transactions'])->name('userTransactions');
@@ -41,6 +47,12 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::get('delete/{id}',[CriteriaController::class, 'delete'])->name('deleteCriteria');
             Route::post('add',[CriteriaController::class, 'addCriteria'])->name('addCriteria');
             Route::post('update',[CriteriaController::class, 'updateCriteria'])->name('updateCriteria');
+        });
+        Route::prefix('occupation')->group(function () {
+            Route::get('/',[OccupationController::class, 'index'])->name('showOccupation');
+            Route::get('delete/{id}',[OccupationController::class, 'delete'])->name('deleteOccupation');
+            Route::post('store',[OccupationController::class, 'store'])->name('addOccupation');
+            Route::post('update',[OccupationController::class, 'update'])->name('updateOccupation');
         });
     });
 });
