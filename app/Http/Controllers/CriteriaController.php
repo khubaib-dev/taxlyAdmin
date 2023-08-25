@@ -11,6 +11,7 @@ use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Occupation;
+use App\Models\UserType;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 
@@ -20,7 +21,8 @@ class CriteriaController extends Controller
     {
         $criterias = Criterion::get();
         $occupations = Occupation::get();
-        return view('admin.criteria.index',compact('occupations', 'criterias'));
+        $types = UserType::get();
+        return view('admin.criteria.index',compact('types', 'occupations', 'criterias'));
     }
 
     

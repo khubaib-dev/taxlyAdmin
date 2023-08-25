@@ -259,6 +259,10 @@
                             class="fa fa-globe" style="color:  #6610F2" aria-hidden="true"></i><span
                             class="menu-title text-truncate" data-i18n="Email">Occupations</span></a>
                 </li>
+                <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('showUserType') }}"><i
+                            class="fa fa-users" style="color:  #6610F2" aria-hidden="true"></i><span
+                            class="menu-title text-truncate" data-i18n="Email">User Types</span></a>
+                </li>
 
                 
 

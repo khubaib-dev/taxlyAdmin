@@ -92,9 +92,13 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="user_type">Enter User Type</label>
-                                        <input type="text" name="user_type" id="user_type" class="form-control"
-                                            placeholder="Enter User Type">
+                                        <label for="user_type">Select User Type</label>
+                                        <select name="user_type" id="user_type" class="form-control">
+                                            <option selected disabled>Select User Type</option>
+                                            @foreach ($types as $type)
+                                                <option value="{{ $type->name }}">{{ $type->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="criteriaCode">Criteria Code</label>
@@ -141,9 +145,13 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="user_type">Enter User Type</label>
-                                        <input type="text" name="user_type" id="user_type_update" class="form-control"
-                                            placeholder="Enter User Type">
+                                        <label for="user_type_update">Select User Type</label>
+                                        <select name="user_type" id="user_type_update" class="form-control">
+                                            <option selected disabled>Select User Type</option>
+                                            @foreach ($types as $type)
+                                                <option value="{{ $type->name }}">{{ $type->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="criteriaCodeUpdate">Criteria Code</label>
