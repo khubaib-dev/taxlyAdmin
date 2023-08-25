@@ -20,6 +20,20 @@ class CriteriaController extends Controller
     public function index()
     {
         $criterias = Criterion::get();
+        foreach ($criterias as $criteria) {
+            $data = null;
+            $occupationIds = explode(',', $criteria->occupation);
+            $length = count($occupationIds);
+            $counter = 0;
+            foreach ($occupationIds as $id) {
+                $profession = Occupation::find($id);
+                if(isset($profession))
+                {
+                    $data .= $profession->name. (++$counter != $length ? ',' : '');
+                }
+            }
+            $criteria['professions'] = $data;
+        }
         $occupations = Occupation::get();
         $types = UserType::get();
         return view('admin.criteria.index',compact('types', 'occupations', 'criterias'));
@@ -35,9 +49,10 @@ class CriteriaController extends Controller
 
     public function addCriteria(Request $request)
     {
+        $occupations = implode(',', $request->occupation);
         Criterion::create([
             'name' => $request->criteriaName,
-            'occupation' => $request->occupation,
+            'occupation' => $occupations,
             'user_type' => $request->user_type,
             'values' => '['.$request->criteriaCode.']'
         ]);
@@ -46,9 +61,10 @@ class CriteriaController extends Controller
     
     public function updateCriteria(Request $request)
     {
+        $occupations = implode(',', $request->occupationUpdate);
         Criterion::whereId($request->criteriaId)->update([
             'name' => $request->criteriaName,
-            'occupation' => $request->occupation,
+            'occupation' => $occupations,
             'user_type' => $request->user_type,
             'values' => '['.$request->criteriaCode.']'
         ]);

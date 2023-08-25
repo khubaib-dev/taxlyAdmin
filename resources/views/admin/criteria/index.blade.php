@@ -40,13 +40,13 @@
                                                 @foreach ($criterias as $criteria)
                                                     <tr>
                                                         <td class="text-center">{{ $criteria->name }}</td>
-                                                        <td class="text-center">{{ $criteria->occupation }}</td>
+                                                        <td class="text-center">{{ $criteria['professions'] }}</td>
                                                         <td class="text-center">{{ $criteria->user_type }}</td>
                                                         <td class="text-center">{{ $criteria->values }}</td>
                                                         <td class="text-center">
                                                             <div class="btn-group">
                                                                 <button
-                                                                    onclick="editor('{{ $criteria->id }}','{{ $criteria->name }}','{{ $criteria->values }}','{{ $criteria->occupation }}','{{ $criteria->user_type }}')"
+                                                                    onclick="editor('{{ $criteria->id }}','{{ $criteria->name }}','{{ $criteria->values }}','{{ $criteria['professions'] }}','{{ $criteria->user_type }}')"
                                                                     class="btn btn-primary"><i
                                                                         class="fa fa-pencil"></i></button>
                                                                 <a onclick="return confirm('Are you sure you want to delete criteria')" href="{{ route('deleteCriteria',['id' => $criteria->id]) }}"
@@ -83,13 +83,11 @@
                                             placeholder="Enter Criteria Name" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="occupation">Select Occupation</label>
-                                        <select name="occupation" id="occupation" class="form-control">
-                                            <option selected disabled>Select Occupation</option>
-                                            @foreach ($occupations as $occupation)
-                                                <option value="{{ $occupation->name }}">{{ $occupation->name }}</option>
-                                            @endforeach
-                                        </select>
+                                        <label>Select Occupations</label><br>
+                                        @foreach ($occupations as $occupation)
+                                        <label class="ml-1" style="margin-bottom: 5px" for="occupation_{{ $occupation->id }}">{{ $occupation->name }}</label>
+                                        <input type="checkbox" name="occupation[]" value="{{ $occupation->id }}" id="occupation_{{ $occupation->id }}">
+                                        @endforeach
                                     </div>
                                     <div class="form-group">
                                         <label for="user_type">Select User Type</label>
@@ -136,13 +134,11 @@
                                             required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="occupation">Select Occupation</label>
-                                        <select name="occupation" id="occupationUpdate" class="form-control">
-                                            <option selected disabled>Select Occupation</option>
-                                            @foreach ($occupations as $occupation)
-                                                <option value="{{ $occupation->name }}">{{ $occupation->name }}</option>
-                                            @endforeach
-                                        </select>
+                                        <label>Select Occupations</label><br>
+                                        @foreach ($occupations as $occupation)
+                                        <label class="ml-1" style="margin-bottom: 5px" for="occupation_{{ $occupation->id }}">{{ $occupation->name }}</label>
+                                        <input type="checkbox" name="occupationUpdate[]" value="{{ $occupation->id }}" id="occupation_{{ $occupation->id }}">
+                                        @endforeach
                                     </div>
                                     <div class="form-group">
                                         <label for="user_type_update">Select User Type</label>
@@ -181,11 +177,23 @@
 <script>
     function editor(id,cat,code,occupation,user_type)
     {
+        var occupationNames = occupation.split(',')
+        var checkboxes = document.querySelectorAll('input[type="checkbox"][name="occupationUpdate[]"]')
+        checkboxes.forEach(function (checkbox) {
+            checkbox.checked = false;
+        });
+        
+        checkboxes.forEach(function (checkbox) {
+            var label = checkbox.previousElementSibling
+            if (label && occupationNames.includes(label.textContent.trim())) {
+                checkbox.checked = true;
+            }
+        });
+
         code = code.substring(1, code.length-1)
         $('#criteriaId').val(id)
         $('#criteriaNameUpdate').val(cat)
         $('#criteriaCodeUpdate').val(code)
-        $('#occupationUpdate').val(occupation)
         $('#user_type_update').val(user_type)
         $('#updateCriteria').modal('show')
     }

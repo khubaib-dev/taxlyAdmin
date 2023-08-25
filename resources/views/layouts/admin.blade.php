@@ -13,7 +13,7 @@
     <meta name="author" content="PIXINVENT">
     <title>{{ config('app.name') }}</title>
     <link rel="apple-touch-icon" href="{{ asset('app-assets/images/ico/apple-icon-120.png')}}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/ico/favicon.ico')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/ico/favicon.png')}}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600"
         rel="stylesheet">
 
@@ -219,23 +219,25 @@
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                 {{-- <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
-                            class="fa fa-home" style="color:  #6610F2;"></i><span class="menu-title text-truncate"
+                            class="fa fa-home" style="color:  #144643;"></i><span class="menu-title text-truncate"
                             data-i18n="Dashboards">Dashboard</span></a></li> --}}
-                <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span><i
+                <li class=" navigation-header"><i
                         data-feather="more-horizontal"></i>
+                {{-- <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span><i
+                        data-feather="more-horizontal"></i> --}}
                 </li>
                 {{-- <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i class="fa fa-cart-plus"
-                            style="color:  #6610F2;"></i><span class="menu-title text-truncate"
+                            style="color:  #144643;"></i><span class="menu-title text-truncate"
                             data-i18n="eCommerce">Orders</span></a>
                     <ul class="menu-content">
                         <li>
                             <a class="d-flex align-items-center" href="#"><i
-                                    class="fa fa-circle" style="color:  #6610F2" aria-hidden="true"></i><span
+                                    class="fa fa-circle" style="color:  #144643" aria-hidden="true"></i><span
                                     class="menu-title text-truncate" data-i18n="Email">Create Order</span></a>
                         </li>
                         <li>
                             <a class="d-flex align-items-center" href="#"><i
-                                    class="fa fa-circle" style="color:  #6610F2" aria-hidden="true"></i><span
+                                    class="fa fa-circle" style="color:  #144643" aria-hidden="true"></i><span
                                     class="menu-title text-truncate" data-i18n="Email">Draft Orders</span></a>
                         </li>
                         
@@ -243,24 +245,24 @@
                 </li> --}}
                 @if(auth()->guard('admin')->user()->role == 0)
                     <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('adminDashboard') }}"><i
-                                class="fa fa-user" style="color:  #6610F2" aria-hidden="true"></i><span
+                                class="fa fa-user" style="color:  #144643" aria-hidden="true"></i><span
                                 class="menu-title text-truncate" data-i18n="Email">Users</span></a>
                     </li>
                 @endif
                 <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('showCOA',['id' => 0]) }}"><i
-                            class="fa fa-briefcase" style="color:  #6610F2" aria-hidden="true"></i><span
+                            class="fa fa-briefcase" style="color:  #144643" aria-hidden="true"></i><span
                             class="menu-title text-truncate" data-i18n="Email">COA</span></a>
                 </li>
                 <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('showCriteria') }}"><i
-                            class="fa fa-tasks" style="color:  #6610F2" aria-hidden="true"></i><span
+                            class="fa fa-tasks" style="color:  #144643" aria-hidden="true"></i><span
                             class="menu-title text-truncate" data-i18n="Email">Criteria</span></a>
                 </li>
                 <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('showOccupation') }}"><i
-                            class="fa fa-globe" style="color:  #6610F2" aria-hidden="true"></i><span
+                            class="fa fa-globe" style="color:  #144643" aria-hidden="true"></i><span
                             class="menu-title text-truncate" data-i18n="Email">Occupations</span></a>
                 </li>
                 <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('showUserType') }}"><i
-                            class="fa fa-users" style="color:  #6610F2" aria-hidden="true"></i><span
+                            class="fa fa-users" style="color:  #144643" aria-hidden="true"></i><span
                             class="menu-title text-truncate" data-i18n="Email">User Types</span></a>
                 </li>
 
@@ -273,8 +275,8 @@
     @yield('content')
 
     <footer class="footer footer-static footer-light">
-        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2020
-                Bucchi's<span class="d-none d-sm-inline-block">, All rights Reserved</span></span></p>
+        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2023
+                Taxly<span class="d-none d-sm-inline-block">, All rights Reserved</span></span></p>
     </footer>
     <button class="btn btn-primary btn-icon scroll-top" type="button"><i class="fa fa-arrow-up"></i></button>
     <!-- END: Footer-->
