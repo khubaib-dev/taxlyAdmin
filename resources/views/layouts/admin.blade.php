@@ -206,7 +206,7 @@
                 <li class="nav-item mr-auto"><a class="navbar-brand" href="/">
 
                         <span class="brand-logo">
-                            <img src="{{ asset('app-assets/images/logo/logo.png') }}">
+                            <img style="max-width: 80px" src="{{ asset('app-assets/images/logo/logo.png') }}">
                         </span>
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i
@@ -218,9 +218,9 @@
         <div class="shadow-bottom"></div>
         <div class="main-menu-content">
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
+                {{-- <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i
                             class="fa fa-home" style="color:  #6610F2;"></i><span class="menu-title text-truncate"
-                            data-i18n="Dashboards">Dashboard</span></a></li>
+                            data-i18n="Dashboards">Dashboard</span></a></li> --}}
                 <li class=" navigation-header"><span data-i18n="Apps &amp; Pages">Apps &amp; Pages</span><i
                         data-feather="more-horizontal"></i>
                 </li>
