@@ -203,10 +203,10 @@
     <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow expanded" data-scroll-to-active="true">
         <div class="navbar-header expanded">
             <ul class="nav navbar-nav flex-row">
-                <li class="nav-item mr-auto"><a class="navbar-brand" href="/">
+                <li class="nav-item mx-auto"><a class="navbar-brand" href="#">
 
                         <span class="brand-logo">
-                            <img style="max-width: 80px" src="{{ asset('app-assets/images/logo/logo.png') }}">
+                            <img style="max-width: 90px" src="{{ asset('app-assets/images/logo/logo.png') }}">
                         </span>
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i
