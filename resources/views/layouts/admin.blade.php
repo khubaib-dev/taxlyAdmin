@@ -59,7 +59,7 @@
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static   menu-expanded" data-open="click"
+<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  menu-expanded" data-open="click"
     data-menu="vertical-menu-modern" data-col="">
 
     <!-- BEGIN: Header-->
@@ -70,7 +70,7 @@
                     <li class="nav-item"><a class="nav-link menu-toggle" href="javascript:void(0);"><i class="fa fa-bars"></i></a></li>
                 </ul>
                 <ul class="nav navbar-nav align-items-center">
-                    <li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link"
+                    <li class="nav-item dropdown dropdown-user"><a class="#6610F dropdown-toggle dropdown-user-link"
                             id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
 
@@ -209,10 +209,10 @@
                             <img style="max-width: 90px" src="{{ asset('app-assets/images/logo/logo.png') }}">
                         </span>
                     </a></li>
-                <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i
+                {{-- <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i
                             class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i
                             class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary"
-                            data-feather="disc" data-ticon="disc"></i></a></li>
+                            data-feather="disc" data-ticon="disc"></i></a></li> --}}
             </ul>
         </div>
         <div class="shadow-bottom"></div>
