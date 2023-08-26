@@ -23,6 +23,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="card card-company-table">
                             <h3 class="text-center mt-1">Chart of Account</h3>
+                            <input type="hidden" value="{{ $id }}" id="given_id">
                             <div class="row p-2">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
@@ -52,7 +53,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($coas as $coa)
+                                                {{-- @foreach ($coas as $coa)
                                                 <tr>
                                                     <td class="text-center">{{ $coa->category }}</td>
                                                     <td class="text-center">{{ $coa->code }}</td>
@@ -71,7 +72,7 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                @endforeach
+                                                @endforeach --}}
                                             </tbody>
                                         </table>
 
@@ -157,6 +158,8 @@
 
 @section('scripts')
 <script>
+    var baseUrl = "{{ url('/') }}"
+    var id = {{ $id }}
     function editor(id,cat,code)
     {
         $('#categoryParentUpdate').val(id)
@@ -165,22 +168,43 @@
         $('#updateCOA').modal('show')
     }
 
-    $(document).ready(function() {
+//     $(document).ready(function() {
+//     $('#coa-table').DataTable({
+//         // Replace "1" with the index of the column you want to make orderable (in this case, it's the second column, so index 1)
+//         "order": [[1, "asc"]],
+//         "columnDefs": [
+//             {
+//                 "targets": [2],
+//                 "orderable": false
+//             },
+//             {
+//                 "targets": [3],
+//                 "orderable": false
+//             },
+//         ],
+//         "lengthMenu": [10, 25, 50, 100],
+//     });
+// });
+
+function getAjaxUrl()
+{
+    return `${baseUrl}/admin/COA/parent/${id}`
+}
+
+$(function () {
     $('#coa-table').DataTable({
-        // Replace "1" with the index of the column you want to make orderable (in this case, it's the second column, so index 1)
+        processing: true,
+        serverSide: true,
         "order": [[1, "asc"]],
-        "columnDefs": [
-            {
-                "targets": [2],
-                "orderable": false
-            },
-            {
-                "targets": [3],
-                "orderable": false
-            },
-        ],
-        "lengthMenu": [10, 25, 50, 100],
+        ajax: getAjaxUrl(),
+        columns: [
+            {data: 'name', name: 'name'},
+            {data: 'code', name: 'code'},
+            {data: 'child', name: 'child'},
+            {data: 'action', name: 'action'},
+        ]
     });
 });
+
 </script>
 @endsection
