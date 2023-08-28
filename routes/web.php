@@ -9,6 +9,7 @@ use App\Http\Controllers\CriteriaController;
 use App\Http\Controllers\OccupationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserTypeController;
+use App\Http\Controllers\ProfessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,12 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::get('delete/{id}',[OccupationController::class, 'delete'])->name('deleteOccupation');
             Route::post('store',[OccupationController::class, 'store'])->name('addOccupation');
             Route::post('update',[OccupationController::class, 'update'])->name('updateOccupation');
+        });
+        Route::prefix('profession')->group(function () {
+            Route::get('/',[ProfessionController::class, 'index'])->name('showProfession');
+            Route::get('delete/{id}',[ProfessionController::class, 'delete'])->name('deleteProfession');
+            Route::post('store',[ProfessionController::class, 'store'])->name('addProfession');
+            Route::post('update',[ProfessionController::class, 'update'])->name('updateProfession');
         });
         Route::prefix('userType')->group(function () {
             Route::get('/',[UserTypeController::class, 'index'])->name('showUserType');

@@ -18,13 +18,10 @@
                     <!-- Company Table Card -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="card card-company-table">
-                            <h3 class="text-center mt-1">Occupation List</h3>
-                            <div class="row p-2">
-                                <a href="{{ route('showProfession') }}" class="btn btn-primary "> Professions </a>
-                                <button data-toggle="modal" data-target="#addCriteria"
-                                    class="btn btn-success ml-auto"> <i class="fa fa-plus"></i> Add
+                            <h3 class="text-center mt-1">Professions List</h3>
+                            <button data-toggle="modal" data-target="#addCriteria"
+                                class="btn btn-success d-block ml-auto mr-1"> <i class="fa fa-plus"></i> Add
                                 New</button>
-                            </div>
                             <div class="card-body p-0">
                                 <div class="table-responsive">
                                     <div class="block full p-2">
@@ -33,20 +30,22 @@
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">Name</th>
+                                                    <th class="text-center">Occupation Name</th>
                                                     <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($occupations as $occupation)
+                                                @foreach ($professions as $profession)
                                                     <tr>
-                                                        <td class="text-center">{{ $occupation->name }}</td>
+                                                        <td class="text-center">{{ $profession->name }}</td>
+                                                        <td class="text-center">{{ $profession->occupation->name }}</td>
                                                         <td class="text-center">
                                                             <div class="btn-group">
                                                                 <button
-                                                                    onclick="editor('{{ $occupation->name }}','{{ $occupation->id }}')"
+                                                                    onclick="editor('{{ $profession->name }}','{{ $profession->id }}','{{ $profession->occupation->id }}')"
                                                                     class="btn btn-primary"><i
                                                                         class="fa fa-pencil"></i></button>
-                                                                <a onclick="return confirm('Are you sure you want to delete Occupation')" href="{{ route('deleteOccupation',['id' => $occupation->id]) }}"
+                                                                <a onclick="return confirm('Are you sure you want to delete Profession')" href="{{ route('deleteProfession',['id' => $profession->id]) }}"
                                                                     class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                                             </div>
                                                         </td>
@@ -66,18 +65,29 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Add New Occupation</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Add New Profession</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="{{ route('addOccupation') }}" method="post">
+                            <form action="{{ route('addProfession') }}" method="post">
                                 @csrf
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label for="occupationName">Occupation Name</label>
-                                        <input type="text" name="occupation" id="occupationName"
-                                            class="form-control" placeholder="Enter Occupation Name" required>
+                                        <label>Select Occupation</label>
+                                        <select class="form-control" name="occupation">
+                                            <option selected disabled>Select Any Occupation</option>
+                                            @foreach ($occupations as $occupation)
+                                                <option value="{{ $occupation->id }}">{{ $occupation->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="ProfessionName">Profession Name</label>
+                                        <input type="text" name="profession" id="ProfessionName"
+                                            class="form-control" placeholder="Enter Profession Name" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -99,14 +109,23 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="{{ route('updateOccupation') }}" method="post">
+                            <form action="{{ route('updateProfession') }}" method="post">
                                 @csrf
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label for="occupationUpdate">Occupation Name</label>
-                                        <input type="text" name="occupation" id="occupationUpdate"
-                                            class="form-control" placeholder="Enter Occupation Name" required>
-                                        <input type="hidden" id="occupationUpdateId" name="occupationId" class="form-control"
+                                        <label>Select Occupation</label>
+                                        <select class="form-control" id="selectedOccupation" name="occupation">
+                                            <option selected disabled>Select Any Occupation</option>
+                                            @foreach ($occupations as $occupation)
+                                                <option value="{{ $occupation->id }}">{{ $occupation->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="professionUpdate">Profession Name</label>
+                                        <input type="text" name="profession" id="professionUpdate"
+                                            class="form-control" placeholder="Enter Profession Name" required>
+                                        <input type="hidden" id="professionUpdateId" name="professionId" class="form-control"
                                             required>
                                     </div>
                                 </div>
@@ -130,10 +149,11 @@
 
 @section('scripts')
 <script>
-    function editor(name,id)
+    function editor(name,id,occupation)
     {
-        $('#occupationUpdateId').val(id)
-        $('#occupationUpdate').val(name)
+        $('#professionUpdateId').val(id)
+        $('#professionUpdate').val(name)
+        $('#selectedOccupation').val(occupation)
         $('#updateCriteria').modal('show')
     }
 
