@@ -45,7 +45,7 @@ class COAController extends Controller
                         $btn = '<div class="btn-group">
                                     <button onclick="editor('.$action->id.','.$action->category.','.$action->code.')" class="btn btn-primary"><i
                                             class="fa fa-pencil"></i></button>
-                                    <a onclick="return confirm(Are you sure you want to delete this COA entry?);" href="'.route('deleteCOA',['id' => $action->id]).'"
+                                    <a onclick="return confirm(`Are you sure you want to delete this COA entry?`);" href="'.route('deleteCOA',['id' => $action->id]).'"
                                         class="btn btn-danger"><i class="fa fa-trash"></i></a>
                                 </div>';
         

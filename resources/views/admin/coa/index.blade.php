@@ -103,7 +103,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="categoryCode">Category Code</label>
-                                        <input type="number" name="categoryCode" id="categoryCode" class="form-control" placeholder="Enter Category Code" required>
+                                        <input type="text" name="categoryCode" id="categoryCode" class="form-control" placeholder="Enter Category Code" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -135,7 +135,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="categoryCodeUpdate">Category Code</label>
-                                        <input type="number" name="categoryCode" id="categoryCodeUpdate" class="form-control" placeholder="Enter Category Code" required>
+                                        <input type="text" name="categoryCode" id="categoryCodeUpdate" class="form-control" placeholder="Enter Category Code" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
