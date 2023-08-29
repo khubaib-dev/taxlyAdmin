@@ -10,6 +10,7 @@ use App\Http\Controllers\OccupationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserTypeController;
 use App\Http\Controllers\ProfessionController;
+use App\Http\Controllers\OnBoardingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +68,12 @@ Route::middleware(['auth.admin'])->group(function () {
             Route::get('delete/{id}',[UserTypeController::class, 'delete'])->name('deleteUserType');
             Route::post('store',[UserTypeController::class, 'store'])->name('addUserType');
             Route::post('update',[UserTypeController::class, 'update'])->name('updateUserType');
+        });
+        Route::prefix('onBoarding')->group(function () {
+            Route::get('/',[OnBoardingController::class, 'index'])->name('showOnBoarding');
+            Route::get('delete/{id}',[OnBoardingController::class, 'delete'])->name('deleteOnBoarding');
+            Route::post('store',[OnBoardingController::class, 'store'])->name('addOnBoarding');
+            Route::post('update',[OnBoardingController::class, 'update'])->name('updateOnBoarding');
         });
     });
 });

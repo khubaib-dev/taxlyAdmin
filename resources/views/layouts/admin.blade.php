@@ -257,6 +257,10 @@
                             class="fa fa-tasks" style="color:  #144643" aria-hidden="true"></i><span
                             class="menu-title text-truncate" data-i18n="Email">Criteria</span></a>
                 </li>
+                <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('showOnBoarding') }}"><i
+                            class="fa fa-industry" style="color:  #144643" aria-hidden="true"></i><span
+                            class="menu-title text-truncate" data-i18n="Email">OnBoarding</span></a>
+                </li>
                 <li class=" nav-item"><a class="d-flex align-items-center" href="{{ route('showOccupation') }}"><i
                             class="fa fa-globe" style="color:  #144643" aria-hidden="true"></i><span
                             class="menu-title text-truncate" data-i18n="Email">Occupations</span></a>
