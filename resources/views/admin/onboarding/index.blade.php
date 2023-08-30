@@ -19,10 +19,9 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="card card-company-table">
                             <h3 class="text-center mt-1">OnBoardings List</h3>
-                            <div class="row p-2">
+                            <div class="row px-2">
                                 <button data-toggle="modal" data-target="#addCriteria" class="btn btn-success ml-auto">
-                                    <i class="fa fa-plus"></i> Add
-                                    New</button>
+                                    <i class="fa fa-plus"></i> Add New</button>
                             </div>
                             <div class="card-body p-0">
                                 <div class="table-responsive">
@@ -44,14 +43,15 @@
                                                 <tr>
                                                     <td class="text-center">{{ $onboading->occupation->name }}</td>
                                                     <td class="text-center">{{ $onboading->criteria->name }}</td>
-                                                    <td class="text-center">{{ $onboading->icon }}</td>
+                                                    <td class="text-center"><img src="{{ $onboading->icon }}" alt="SVG Image"></td>
                                                     <td class="text-center">{{ $onboading->heading }}</td>
                                                     <td class="text-center">{{ $onboading->sub_heading }}</td>
                                                     <td class="text-center">{{ $onboading->type }}</td>
                                                     <td class="text-center">
                                                         <div class="btn-group">
                                                             {{-- <button
-                                                                onclick="editor('{{ $occupation->name }}','{{ $occupation->id }}')"
+                                                                onclick="editor('{{ $onboading->occupation->id }}','{{ $onboading->criteria->id }}',
+                                                                '{{ $onboading->id }}','{{ $onboading->heading }}','{{ $onboading->sub_heading }}','{{ $onboading->type }}')"
                                                                 class="btn btn-primary"><i
                                                                     class="fa fa-pencil"></i></button> --}}
                                                             <a onclick="return confirm('Are you sure you want to delete OnBoarding')"
@@ -80,7 +80,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="{{ route('addOnBoarding') }}" method="post" class="p-1">
+                            <form action="{{ route('addOnBoarding') }}" method="post" class="p-1" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     <label>Select Occupation</label>
@@ -109,6 +109,10 @@
                                     <label for="onBoardingSubHeading">OnBoarding Sub Heading</label>
                                     <input type="text" name="sub_heading" id="onBoardingSubHeading" class="form-control"
                                         placeholder="Enter Sub Heading" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="iconSelect">Select Icon</label>                                    
+                                    <input type="file" name="icon" id="iconSelect" accept=".svg" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Select Type</label>
@@ -223,11 +227,11 @@ function addQuestion() {
 document.getElementById("addQuestionBtn").addEventListener("click", addQuestion);
 </script>
 <script>
-    function editor(name,id)
+    function editor(occupation,criteria,id,heading,sub_heading,type)
     {
-        $('#occupationUpdateId').val(id)
-        $('#occupationUpdate').val(name)
-        $('#updateCriteria').modal('show')
+        
+        
+        // $('#updateCriteria').modal('show')
     }
 
     $(document).ready(function() {

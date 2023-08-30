@@ -38,4 +38,9 @@ class OnBoarding extends Model
         if($type == 1) return 'CheckBox';
         if($type == 0) return 'Radio';
     }
+    
+    public function getIconAttribute($icon)
+    {
+        return asset('files/' . $icon);
+    }
 }

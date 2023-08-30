@@ -26,10 +26,11 @@ class OnBoardingController extends Controller
 
     public function store(Request $request)
     {
+        $path = $request->icon->store('icon');
         $onBoarding = OnBoarding::create([
             'occupation_id' => $request->occupation,
             'criteria_id' => $request->criteria,
-            'icon' => $request->criteria,
+            'icon' => $path,
             'heading' => $request->heading,
             'sub_heading' => $request->sub_heading,
             'type' => $request->type,
