@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('on_boardings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('occupation_id')->constrained('occupations')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('profession_id')->nullable();
             $table->unsignedBigInteger('criteria_id');
             $table->string('icon');
             $table->string('heading');

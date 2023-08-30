@@ -71,6 +71,7 @@ Route::middleware(['auth.admin'])->group(function () {
         });
         Route::prefix('onBoarding')->group(function () {
             Route::get('/',[OnBoardingController::class, 'index'])->name('showOnBoarding');
+            Route::get('/getProfession',[OnBoardingController::class, 'getProfession'])->name('getProfession');
             Route::get('delete/{id}',[OnBoardingController::class, 'delete'])->name('deleteOnBoarding');
             Route::post('store',[OnBoardingController::class, 'store'])->name('addOnBoarding');
             Route::post('update',[OnBoardingController::class, 'update'])->name('updateOnBoarding');

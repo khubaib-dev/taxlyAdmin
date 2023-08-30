@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Models\Occupation;
 use App\Models\OnBoarding;
 use App\Models\OnBoardingQuestion;
+use App\Models\Profession;
 
 class OnBoardingController extends Controller
 {
@@ -24,11 +25,21 @@ class OnBoardingController extends Controller
         return view('admin.onboarding.index',compact('criterias','occupations','onboadings'));
     }
 
+    public function getProfession(Request $request)
+    {
+        $professions = Profession::where('occupation_id',$request->id)->get();
+        return response()->json([
+            'ok' => true,
+            'professions' => $professions
+        ]);
+    }
+
     public function store(Request $request)
     {
         $path = $request->icon->store('icon');
         $onBoarding = OnBoarding::create([
             'occupation_id' => $request->occupation,
+            'profession_id' => $request->profession,
             'criteria_id' => $request->criteria,
             'icon' => $path,
             'heading' => $request->heading,
@@ -51,10 +62,17 @@ class OnBoardingController extends Controller
     
     public function update(Request $request)
     {
-        Occupation::where('id',$request->occupationId)->update([
-            'name' => $request->occupation
+        $path = $request->icon->store('icon');
+        OnBoarding::where('id',$request->id)->update([
+            'occupation_id' => $request->occupation,
+            'profession_id' => $request->profession,
+            'criteria_id' => $request->criteria,
+            'icon' => $path,
+            'heading' => $request->heading,
+            'sub_heading' => $request->sub_heading,
+            'type' => $request->type,
         ]);
-        return redirect()->back()->withSuccess('Occupation Updated');
+        return redirect()->back()->withSuccess('OnBoarding Updated');
     }
 
     public function delete($id)

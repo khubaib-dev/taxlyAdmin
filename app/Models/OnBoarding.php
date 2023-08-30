@@ -10,13 +10,18 @@ class OnBoarding extends Model
     use HasFactory;
 
     protected $fillable = [
-        'occupation_id', 'criteria_id', 'icon', 'heading', 
+        'occupation_id', 'profession_id', 'criteria_id', 'icon', 'heading', 
         'sub_heading', 'type'
     ];
 
     protected $with = [
-        'questions', 'occupation', 'criteria'
+        'questions', 'occupation', 'criteria', 'profession'
     ];
+
+    public function profession()
+    {
+        return $this->belongsTo(Profession::class, 'profession_id', 'id');
+    }
 
     public function questions()
     {

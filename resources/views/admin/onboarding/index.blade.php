@@ -30,6 +30,7 @@
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">Occupation</th>
+                                                    <th class="text-center">Profession</th>
                                                     <th class="text-center">Criteria</th>
                                                     <th class="text-center">Icon</th>
                                                     <th class="text-center">Heading</th>
@@ -42,6 +43,7 @@
                                                 @foreach ($onboadings as $onboading)
                                                 <tr>
                                                     <td class="text-center">{{ $onboading->occupation->name }}</td>
+                                                    <td class="text-center">{{ ($onboading->profession_id != null) ? $onboading->profession->name : 'Not selected' }}</td>
                                                     <td class="text-center">{{ $onboading->criteria->name }}</td>
                                                     <td class="text-center"><img src="{{ $onboading->icon }}" alt="SVG Image"></td>
                                                     <td class="text-center">{{ $onboading->heading }}</td>
@@ -49,11 +51,10 @@
                                                     <td class="text-center">{{ $onboading->type }}</td>
                                                     <td class="text-center">
                                                         <div class="btn-group">
-                                                            {{-- <button
-                                                                onclick="editor('{{ $onboading->occupation->id }}','{{ $onboading->criteria->id }}',
+                                                            <button onclick="editor('{{ $onboading->occupation->id }}','{{ $onboading->profession_id }}','{{ $onboading->criteria->id }}','{{ $onboading->icon }}',
                                                                 '{{ $onboading->id }}','{{ $onboading->heading }}','{{ $onboading->sub_heading }}','{{ $onboading->type }}')"
                                                                 class="btn btn-primary"><i
-                                                                    class="fa fa-pencil"></i></button> --}}
+                                                                    class="fa fa-pencil"></i></button>
                                                             <a onclick="return confirm('Are you sure you want to delete OnBoarding')"
                                                                 href="{{ route('deleteOnBoarding',['id' => $onboading->id]) }}"
                                                                 class="btn btn-danger"><i class="fa fa-trash"></i></a>
@@ -89,6 +90,13 @@
                                         @foreach ($occupations as $occupation)
                                         <option value="{{ $occupation->id }}">{{ $occupation->name }}</option>
                                         @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Select Profession</label>
+                                    <select class="form-control" id="selectedProfession" name="profession">
+                                        <option value="" selected disabled>Select Any Profession</option>
+                                        
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -144,21 +152,60 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Update Occupation</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Update OnBoarding</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="{{ route('updateOccupation') }}" method="post">
+                            <form action="{{ route('updateOnBoarding') }}" method="post" enctype="multipart/form-data" class="p-1">
                                 @csrf
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="occupationUpdate">Occupation Name</label>
-                                        <input type="text" name="occupation" id="occupationUpdate" class="form-control"
-                                            placeholder="Enter Occupation Name" required>
-                                        <input type="hidden" id="occupationUpdateId" name="occupationId"
-                                            class="form-control" required>
-                                    </div>
+                                <div class="form-group">
+                                    <input type="hidden" name="id" id="onBoardingIdUpdate">
+                                    <label for="selectedOccupationUpdate">Select Occupation</label>
+                                    <select class="form-control" id="selectedOccupationUpdate" name="occupation" required>
+                                        <option value="" selected disabled>Select Any Occupation</option>
+                                        @foreach ($occupations as $occupation)
+                                        <option value="{{ $occupation->id }}">{{ $occupation->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="selectedProfessionUpdate">Select Profession</label>
+                                    <select class="form-control" id="selectedProfessionUpdate" name="profession">
+                                        <option value="" selected disabled>Select Any Profession</option>
+                                        
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="selectedCriteriaUpdate">Select Criteria</label>
+                                    <select class="form-control" id="selectedCriteriaUpdate" name="criteria" required>
+                                        <option value="" selected disabled>Select Any Criteria</option>
+                                        @foreach ($criterias as $criteria)
+                                        <option value="{{ $criteria->id }}">{{ $criteria->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="onBoardingHeadingUpdate">OnBoarding Heading</label>
+                                    <input type="text" name="heading" id="onBoardingHeadingUpdate" class="form-control"
+                                        placeholder="Enter Heading" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="onBoardingSubHeadingUpdate">OnBoarding Sub Heading</label>
+                                    <input type="text" name="sub_heading" id="onBoardingSubHeadingUpdate" class="form-control"
+                                        placeholder="Enter Sub Heading" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="iconSelectUpdate">Select Icon</label>                                    
+                                    <input type="file" name="icon" id="iconSelectUpdate" accept=".svg" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Select Type</label>
+                                    <br>
+                                    <label for="checkboxUpdate">CheckBox</label>
+                                    <input type="radio" name="type" id="checkboxUpdate" value="1" required>
+                                    <label for="radioUpdate">Radio</label>
+                                    <input type="radio" name="type" id="radioUpdate" value="0" required>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -179,6 +226,134 @@
 @endsection
 
 @section('scripts')
+
+<script>
+    var baseUrl = "{{ url('/') }}"
+
+    async function editor(occupation,profession,criteria,icon,id,heading,sub_heading,type)
+    {
+        await getProfessions(occupation)
+        $('#onBoardingIdUpdate').val(id)
+        $('#selectedOccupationUpdate').val(occupation)
+        $('#selectedProfessionUpdate').val(profession)
+        $('#selectedCriteriaUpdate').val(criteria)
+        $('#onBoardingHeadingUpdate').val(heading)
+        $('#onBoardingSubHeadingUpdate').val(sub_heading)
+        $('#onBoardingHeadingUpdate').val(heading)
+        if(type == 'CheckBox') 
+        {
+            $('#checkboxUpdate').prop("checked", true)
+        }
+        else 
+        {
+            $('#radioUpdate').prop("checked", true)
+        }
+
+        $('#updateCriteria').modal('show')
+    }
+
+    function generateProfessionSelectUpdate(professions,reload)
+    {
+        const selectElement = document.getElementById("selectedProfessionUpdate");
+        if(reload)
+        {
+            while (selectElement.options.length > 0) {
+                selectElement.remove(0);
+            }
+            //dummy option selected
+            const option = document.createElement("option");
+            option.value = '';
+            option.textContent = 'Select Any Profession';
+            option.selected = true;
+            option.disabled = false;
+            selectElement.appendChild(option);
+        }
+        
+        //Actual options selected
+        professions.forEach(profession => {
+            const option = document.createElement("option");
+            option.value = profession.id;
+            option.textContent = profession.name;
+            selectElement.appendChild(option);
+        })
+    }
+
+    function getProfessions(occupation)
+    {
+        var url = baseUrl + "/admin/onBoarding/getProfession";
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: {
+                id: occupation
+            },
+            success: async function (response) {
+                if (response.ok) {
+                    generateProfessionSelectUpdate(response.professions,false)
+                }
+            },
+            error: function (xhr, status, error) {
+                // Handle the error response
+            }
+        });
+    }
+
+
+    $('#selectedOccupation').change(function(){
+        const occupation = $('#selectedOccupation').val()
+        var url = baseUrl + "/admin/onBoarding/getProfession";
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: {
+                id: occupation
+            },
+            success: async function (response) {
+                if (response.ok) {
+                    generateProfessionSelect(response.professions)
+                }
+            },
+            error: function (xhr, status, error) {
+                // Handle the error response
+            }
+        });
+    })
+    
+    $('#selectedOccupationUpdate').change(function(){
+        const occupation = $('#selectedOccupationUpdate').val()
+        var url = baseUrl + "/admin/onBoarding/getProfession";
+        $.ajax({
+            url: url,
+            type: "GET",
+            data: {
+                id: occupation
+            },
+            success: async function (response) {
+                if (response.ok) {
+                    generateProfessionSelectUpdate(response.professions,true)
+                }
+            },
+            error: function (xhr, status, error) {
+                // Handle the error response
+            }
+        });
+    })
+
+    function generateProfessionSelect(professions)
+    {
+        const selectElement = document.getElementById("selectedProfession");
+        professions.forEach(profession => {
+            const option = document.createElement("option");
+            option.value = profession.id;
+            option.textContent = profession.name;
+            selectElement.appendChild(option);
+        })
+    }
+    
+
+</script>
+
+
 <script>
     let questionCounter = 0;
 
@@ -227,20 +402,21 @@ function addQuestion() {
 document.getElementById("addQuestionBtn").addEventListener("click", addQuestion);
 </script>
 <script>
-    function editor(occupation,criteria,id,heading,sub_heading,type)
-    {
-        
-        
-        // $('#updateCriteria').modal('show')
-    }
-
     $(document).ready(function() {
     $('#criteria-table').DataTable({
         // Replace "1" with the index of the column you want to make orderable (in this case, it's the second column, so index 1)
         "order": [[0, "asc"]],
         "columnDefs": [
             {
-                "targets": [1],
+                "targets": [2],
+                "orderable": false
+            },
+            {
+                "targets": [5],
+                "orderable": false
+            },
+            {
+                "targets": [6],
                 "orderable": false
             }
         ],
