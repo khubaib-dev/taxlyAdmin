@@ -62,7 +62,13 @@ class OnBoardingController extends Controller
     
     public function update(Request $request)
     {
-        $path = $request->icon->store('icon');
+        if(isset($request->icon))
+        {
+            $path = $request->icon->store('icon');
+        }
+        else{
+            $path = OnBoarding::find($request->id)->icon;
+        }
         OnBoarding::where('id',$request->id)->update([
             'occupation_id' => $request->occupation,
             'profession_id' => $request->profession,
@@ -72,6 +78,19 @@ class OnBoardingController extends Controller
             'sub_heading' => $request->sub_heading,
             'type' => $request->type,
         ]);
+
+        OnBoardingQuestion::where('on_boarding_id',$request->id)->delete();
+
+        $questions = [];
+
+        for($i = 1; $i <= $request->total_questions; $i++) {
+            $questions[] = [
+                'on_boarding_id' => $request->id,
+                'label' => $request['question_'.$i]
+            ];
+        }
+
+        OnBoardingQuestion::insert($questions);
         return redirect()->back()->withSuccess('OnBoarding Updated');
     }
 

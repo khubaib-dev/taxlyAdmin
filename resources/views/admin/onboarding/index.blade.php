@@ -52,7 +52,7 @@
                                                     <td class="text-center">
                                                         <div class="btn-group">
                                                             <button onclick="editor('{{ $onboading->occupation->id }}','{{ $onboading->profession_id }}','{{ $onboading->criteria->id }}','{{ $onboading->icon }}',
-                                                                '{{ $onboading->id }}','{{ $onboading->heading }}','{{ $onboading->sub_heading }}','{{ $onboading->type }}')"
+                                                                '{{ $onboading->id }}','{{ $onboading->heading }}','{{ $onboading->sub_heading }}','{{ $onboading->type }}','{{ $onboading->questions }}')"
                                                                 class="btn btn-primary"><i
                                                                     class="fa fa-pencil"></i></button>
                                                             <a onclick="return confirm('Are you sure you want to delete OnBoarding')"
@@ -95,7 +95,7 @@
                                 <div class="form-group">
                                     <label>Select Profession</label>
                                     <select class="form-control" id="selectedProfession" name="profession">
-                                        <option value="" selected disabled>Select Any Profession</option>
+                                        <option value="" selected >Select Any Profession</option>
                                         
                                     </select>
                                 </div>
@@ -197,7 +197,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="iconSelectUpdate">Select Icon</label>                                    
-                                    <input type="file" name="icon" id="iconSelectUpdate" accept=".svg" required>
+                                    <input type="file" name="icon" id="iconSelectUpdate" accept=".svg">
                                 </div>
                                 <div class="form-group">
                                     <label>Select Type</label>
@@ -207,6 +207,14 @@
                                     <label for="radioUpdate">Radio</label>
                                     <input type="radio" name="type" id="radioUpdate" value="0" required>
                                 </div>
+                                <hr>
+                                <div class="row p-2">
+                                    <h6>Questions</h6>
+                                    <button type="button" id="addQuestionBtnUpdate" class="btn btn-primary ml-auto">Add
+                                        Question</button>
+                                </div>
+                                <input type="hidden" id="total_questionsUpdate" name="total_questions">
+                                <div id="questionListUpdate" class="mt-3"></div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Update</button>
@@ -230,8 +238,9 @@
 <script>
     var baseUrl = "{{ url('/') }}"
 
-    async function editor(occupation,profession,criteria,icon,id,heading,sub_heading,type)
+    async function editor(occupation,profession,criteria,icon,id,heading,sub_heading,type,questions)
     {
+        await showQuestions(JSON.parse(questions))
         await getProfessions(occupation)
         $('#onBoardingIdUpdate').val(id)
         $('#selectedOccupationUpdate').val(occupation)
@@ -250,6 +259,7 @@
         }
 
         $('#updateCriteria').modal('show')
+  
     }
 
     function generateProfessionSelectUpdate(professions,reload)
@@ -289,7 +299,7 @@
             },
             success: async function (response) {
                 if (response.ok) {
-                    generateProfessionSelectUpdate(response.professions,false)
+                    await generateProfessionSelectUpdate(response.professions,false)
                 }
             },
             error: function (xhr, status, error) {
@@ -352,6 +362,95 @@
     
 
 </script>
+
+
+<script>
+    function showQuestions(questions){
+        let questionCounterUpdate = questions.length;
+        
+        questions.forEach((question) => {
+
+            const questionDiv = document.createElement("div");
+            questionDiv.className = "input-group mb-3";
+            
+            const questionInput = document.createElement("input");
+            questionInput.type = "text";
+            questionInput.className = "form-control question-input-update";
+            questionInput.name = `question_${questionCounterUpdate}`;
+            questionInput.value = question.label;
+            
+            const deleteButton = document.createElement("button");
+            deleteButton.className = "btn btn-danger";
+            deleteButton.textContent = "Delete";
+            
+            deleteButton.addEventListener("click", function() {
+                questionDiv.remove();
+                updateQuestionNamesUpdate()
+            })
+            
+            questionDiv.appendChild(questionInput);
+            questionDiv.appendChild(deleteButton);
+            
+            document.getElementById("questionListUpdate").appendChild(questionDiv);
+            updateQuestionNamesUpdate()
+            
+        })
+        
+    }
+
+function updateQuestionNamesUpdate() {
+    const questionInputs = document.querySelectorAll(".question-input-update");
+    questionCounterUpdate = 0;
+    
+    questionInputs.forEach((input, index) => {
+        questionCounterUpdate++;
+        input.name = `question_${questionCounterUpdate}`;
+    });
+
+    $('#total_questionsUpdate').val(questionCounterUpdate);
+}
+
+// Function to add a new question
+function addQuestionUpdate() {
+    questionCounterUpdate++;
+    
+    const questionDiv = document.createElement("div");
+    questionDiv.className = "input-group mb-3";
+    
+    const questionInput = document.createElement("input");
+    questionInput.type = "text";
+    questionInput.className = "form-control question-input-update";
+    questionInput.name = `question_${questionCounterUpdate}`;
+    questionInput.placeholder = "Enter your question...";
+    
+    const deleteButton = document.createElement("button");
+    deleteButton.className = "btn btn-danger";
+    deleteButton.textContent = "Delete";
+    
+    deleteButton.addEventListener("click", function() {
+        questionDiv.remove();
+        updateQuestionNamesUpdate()
+    })
+    
+    questionDiv.appendChild(questionInput);
+    questionDiv.appendChild(deleteButton);
+    
+    document.getElementById("questionListUpdate").appendChild(questionDiv);
+    updateQuestionNamesUpdate()
+}
+
+// Add event listener to the "Add New Question" button
+document.getElementById("addQuestionBtnUpdate").addEventListener("click", addQuestionUpdate);
+</script>
+
+
+
+
+
+
+
+
+
 
 
 <script>
