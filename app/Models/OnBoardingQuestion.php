@@ -9,7 +9,10 @@ class OnBoardingQuestion extends Model
 {
     use HasFactory;
 
+    protected $table = 'on_boarding_questions';
+
     protected $fillable = [
-        'on_boarding_id', 'label', 'order'
+        'onBoardingIdId', 'label', 'order'
     ];
+    public $timestamps = false;
 }

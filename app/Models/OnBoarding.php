@@ -9,6 +9,8 @@ class OnBoarding extends Model
 {
     use HasFactory;
 
+    protected $table = 'on_boardings';
+
     protected $fillable = [
         'occupation_id', 'profession_id', 'criteria_id', 'icon', 'heading', 
         'sub_heading', 'type'
@@ -25,7 +27,7 @@ class OnBoarding extends Model
 
     public function questions()
     {
-        return $this->hasMany(OnBoardingQuestion::class, 'on_boarding_id', 'id');
+        return $this->hasMany(OnBoardingQuestion::class, 'onBoardingIdId', 'id');
     }
 
     public function occupation()
@@ -48,4 +50,6 @@ class OnBoarding extends Model
     {
         return asset('files/' . $icon);
     }
+
+    public $timestamps = false;
 }

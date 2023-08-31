@@ -53,7 +53,7 @@ class OnBoardingController extends Controller
             if($request['question_'.$i] != '' &&  $request['question_order_'.$i] != '')
             {
                 $questions[] = [
-                    'on_boarding_id' => $onBoarding->id,
+                    'onBoardingIdId' => $onBoarding->id,
                     'label' => $request['question_'.$i],
                     'order' => $request['question_order_'.$i]
                 ];
@@ -83,7 +83,7 @@ class OnBoardingController extends Controller
             'type' => $request->type,
         ]);
 
-        OnBoardingQuestion::where('on_boarding_id',$request->id)->delete();
+        OnBoardingQuestion::where('onBoardingIdId',$request->id)->delete();
 
         $questions = [];
 
@@ -91,7 +91,7 @@ class OnBoardingController extends Controller
             if($request['question_'.$i] != '' &&  $request['question_order_'.$i] != '')
             {
                 $questions[] = [
-                    'on_boarding_id' => $request->id,
+                    'onBoardingIdId' => $request->id,
                     'label' => $request['question_'.$i],
                     'order' => $request['question_order_'.$i]
                 ];
