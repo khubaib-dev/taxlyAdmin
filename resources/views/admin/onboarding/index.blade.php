@@ -51,8 +51,17 @@
                                                     <td class="text-center">{{ $onboading->type }}</td>
                                                     <td class="text-center">
                                                         <div class="btn-group">
-                                                            <button onclick="editor('{{ $onboading->occupation->id }}','{{ $onboading->profession_id }}','{{ $onboading->criteria->id }}','{{ $onboading->icon }}',
-                                                                '{{ $onboading->id }}','{{ $onboading->heading }}','{{ $onboading->sub_heading }}','{{ $onboading->type }}','{{ $onboading->questions }}')"
+                                                            <button onclick="editor(
+                                                            '{{ $onboading->occupation->id }}',
+                                                            '{{ $onboading->profession_id }}',
+                                                            '{{ $onboading->criteria->id }}',
+                                                            '{{ $onboading->icon }}',
+                                                            '{{ $onboading->id }}',
+                                                            '{{ addslashes($onboading->heading) }}',
+                                                            '{{ addslashes($onboading->sub_heading) }}',
+                                                            '{{ $onboading->type }}',
+                                                            '{{ addslashes($onboading->questions) }}'
+                                                            )"
                                                                 class="btn btn-primary"><i
                                                                     class="fa fa-pencil"></i></button>
                                                             <a onclick="return confirm('Are you sure you want to delete OnBoarding')"
@@ -365,8 +374,9 @@
 
 
 <script>
+    var questionCounterUpdate = 0
     function showQuestions(questions){
-        let questionCounterUpdate = questions.length;
+        questionCounterUpdate = questions.length;
         
         questions.forEach((question) => {
 
@@ -378,6 +388,14 @@
             questionInput.className = "form-control question-input-update";
             questionInput.name = `question_${questionCounterUpdate}`;
             questionInput.value = question.label;
+            questionInput.required = true;
+
+            const questionOrder = document.createElement("input");
+            questionOrder.type = "number";
+            questionOrder.className = "form-control question-order-update";
+            questionOrder.name = `question_order_${questionCounterUpdate}`;
+            questionOrder.value = question.order;
+            questionOrder.required = true;
             
             const deleteButton = document.createElement("button");
             deleteButton.className = "btn btn-danger";
@@ -389,6 +407,7 @@
             })
             
             questionDiv.appendChild(questionInput);
+            questionDiv.appendChild(questionOrder);
             questionDiv.appendChild(deleteButton);
             
             document.getElementById("questionListUpdate").appendChild(questionDiv);
@@ -400,11 +419,18 @@
 
 function updateQuestionNamesUpdate() {
     const questionInputs = document.querySelectorAll(".question-input-update");
+    const questionOrders = document.querySelectorAll(".question-order-update");
     questionCounterUpdate = 0;
+    questionOrderCounter = 0;
     
     questionInputs.forEach((input, index) => {
         questionCounterUpdate++;
         input.name = `question_${questionCounterUpdate}`;
+    });
+
+    questionOrders.forEach((input, index) => {
+        questionOrderCounter++;
+        input.name = `question_order_${questionOrderCounter}`;
     });
 
     $('#total_questionsUpdate').val(questionCounterUpdate);
@@ -422,6 +448,14 @@ function addQuestionUpdate() {
     questionInput.className = "form-control question-input-update";
     questionInput.name = `question_${questionCounterUpdate}`;
     questionInput.placeholder = "Enter your question...";
+    questionInput.required = true;
+
+    const questionOrder = document.createElement("input");
+    questionOrder.type = "number";
+    questionOrder.className = "form-control question-order-update";
+    questionOrder.name = `question_order_${questionCounterUpdate}`;
+    questionOrder.placeholder = "Enter order number";
+    questionOrder.required = true;
     
     const deleteButton = document.createElement("button");
     deleteButton.className = "btn btn-danger";
@@ -433,6 +467,7 @@ function addQuestionUpdate() {
     })
     
     questionDiv.appendChild(questionInput);
+    questionDiv.appendChild(questionOrder);
     questionDiv.appendChild(deleteButton);
     
     document.getElementById("questionListUpdate").appendChild(questionDiv);
@@ -444,25 +479,24 @@ document.getElementById("addQuestionBtnUpdate").addEventListener("click", addQue
 </script>
 
 
-
-
-
-
-
-
-
-
-
 <script>
     let questionCounter = 0;
+    let questionOrderCounter = 0;
 
 function updateQuestionNames() {
     const questionInputs = document.querySelectorAll(".question-input");
+    const questionOrders = document.querySelectorAll(".question-order");
     questionCounter = 0;
+    questionOrderCounter = 0;
     
     questionInputs.forEach((input, index) => {
         questionCounter++;
         input.name = `question_${questionCounter}`;
+    });
+    
+    questionOrders.forEach((input, index) => {
+        questionOrderCounter++;
+        input.name = `question_order_${questionOrderCounter}`;
     });
 
     $('#total_questions').val(questionCounter);
@@ -480,6 +514,14 @@ function addQuestion() {
     questionInput.className = "form-control question-input";
     questionInput.name = `question_${questionCounter}`;
     questionInput.placeholder = "Enter your question...";
+    questionInput.required = true;
+    
+    const questionOrder = document.createElement("input");
+    questionOrder.type = "number";
+    questionOrder.className = "form-control question-order";
+    questionOrder.name = `question_order_${questionCounter}`;
+    questionOrder.placeholder = "Enter order number";
+    questionOrder.required = true;
     
     const deleteButton = document.createElement("button");
     deleteButton.className = "btn btn-danger";
@@ -491,6 +533,7 @@ function addQuestion() {
     })
     
     questionDiv.appendChild(questionInput);
+    questionDiv.appendChild(questionOrder);
     questionDiv.appendChild(deleteButton);
     
     document.getElementById("questionList").appendChild(questionDiv);

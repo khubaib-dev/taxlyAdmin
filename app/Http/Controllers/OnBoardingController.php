@@ -50,10 +50,14 @@ class OnBoardingController extends Controller
         $questions = [];
 
         for($i = 1; $i <= $request->total_questions; $i++) {
-            $questions[] = [
-                'on_boarding_id' => $onBoarding->id,
-                'label' => $request['question_'.$i]
-            ];
+            if($request['question_'.$i] != '' &&  $request['question_order_'.$i] != '')
+            {
+                $questions[] = [
+                    'on_boarding_id' => $onBoarding->id,
+                    'label' => $request['question_'.$i],
+                    'order' => $request['question_order_'.$i]
+                ];
+            }
         }
 
         OnBoardingQuestion::insert($questions);
@@ -67,7 +71,7 @@ class OnBoardingController extends Controller
             $path = $request->icon->store('icon');
         }
         else{
-            $path = OnBoarding::find($request->id)->icon;
+            $path = OnBoarding::find($request->id)->getRawOriginal('icon');
         }
         OnBoarding::where('id',$request->id)->update([
             'occupation_id' => $request->occupation,
@@ -84,10 +88,14 @@ class OnBoardingController extends Controller
         $questions = [];
 
         for($i = 1; $i <= $request->total_questions; $i++) {
-            $questions[] = [
-                'on_boarding_id' => $request->id,
-                'label' => $request['question_'.$i]
-            ];
+            if($request['question_'.$i] != '' &&  $request['question_order_'.$i] != '')
+            {
+                $questions[] = [
+                    'on_boarding_id' => $request->id,
+                    'label' => $request['question_'.$i],
+                    'order' => $request['question_order_'.$i]
+                ];
+            }
         }
 
         OnBoardingQuestion::insert($questions);

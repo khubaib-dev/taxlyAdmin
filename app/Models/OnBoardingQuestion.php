@@ -10,6 +10,6 @@ class OnBoardingQuestion extends Model
     use HasFactory;
 
     protected $fillable = [
-        'on_boarding_id', 'label'
+        'on_boarding_id', 'label', 'order'
     ];
 }
