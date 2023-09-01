@@ -14,6 +14,8 @@ use App\Models\Occupation;
 use App\Models\OnBoarding;
 use App\Models\OnBoardingQuestion;
 use App\Models\Profession;
+use Illuminate\Support\Facades\Storage;
+
 
 class OnBoardingController extends Controller
 {
@@ -36,7 +38,23 @@ class OnBoardingController extends Controller
 
     public function store(Request $request)
     {
-        $path = $request->icon->store('icon');
+        
+        $selectedIcon = $request->input('selected_icon');
+        $iconPath = public_path('icons/' . $selectedIcon . '.svg');
+        $iconContent = file_get_contents($iconPath);
+
+        // Create a unique filename for the SVG file
+        $filename = 'icon_' . time() . '.svg';
+
+        // Specify the folder where you want to store the SVG files
+        $folder = 'files';
+
+        // Store the SVG content as a file in the specified folder
+        Storage::disk('local')->put($folder . '/' . $filename, $iconContent);
+
+        // Get the path of the stored file
+        $path = $folder . '/' . $filename;
+        
         $onBoarding = OnBoarding::create([
             'occupation_id' => $request->occupation,
             'profession_id' => $request->profession,
@@ -66,9 +84,23 @@ class OnBoardingController extends Controller
     
     public function update(Request $request)
     {
-        if(isset($request->icon))
+        $selectedIcon = $request->input('selected_icon');
+        if(isset($selectedIcon))
         {
-            $path = $request->icon->store('icon');
+            $iconPath = public_path('icons/' . $selectedIcon . '.svg');
+            $iconContent = file_get_contents($iconPath);
+
+            // Create a unique filename for the SVG file
+            $filename = 'icon_' . time() . '.svg';
+
+            // Specify the folder where you want to store the SVG files
+            $folder = 'files';
+
+            // Store the SVG content as a file in the specified folder
+            Storage::disk('local')->put($folder . '/' . $filename, $iconContent);
+
+            // Get the path of the stored file
+            $path = $folder . '/' . $filename;
         }
         else{
             $path = OnBoarding::find($request->id)->getRawOriginal('icon');

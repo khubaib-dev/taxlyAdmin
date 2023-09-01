@@ -1,6 +1,38 @@
 @extends('layouts.admin')
 @section('style')
+<style>
+.icon-select {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
 
+.icon-option {
+    display: flex; /* Align icon and text vertically */
+    align-items: center;
+    padding: 5px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.icon-option.selected {
+    border-color: #007bff;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-name {
+    margin-left: 5px;
+}
+</style>
 @endsection
 
 @section('content')
@@ -45,7 +77,7 @@
                                                     <td class="text-center">{{ $onboading->occupation->name }}</td>
                                                     <td class="text-center">{{ ($onboading->profession_id != null) ? $onboading->profession->name : 'Not selected' }}</td>
                                                     <td class="text-center">{{ $onboading->criteria->name }}</td>
-                                                    <td class="text-center"><img src="{{ $onboading->icon }}" alt="SVG Image"></td>
+                                                    <td class="text-center"><img src="{{ $onboading->icon }}" style="width: 50px; height: 50px;" alt="SVG Image"></td>
                                                     <td class="text-center">{{ $onboading->heading }}</td>
                                                     <td class="text-center">{{ $onboading->sub_heading }}</td>
                                                     <td class="text-center">{{ $onboading->type }}</td>
@@ -129,7 +161,21 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="iconSelect">Select Icon</label>                                    
-                                    <input type="file" name="icon" id="iconSelect" accept=".svg" required>
+                                    <div class="icon-select">
+                                        @foreach(glob(public_path('icons/*.svg')) as $iconPath)
+                                            <?php
+                                                $iconName = basename($iconPath, '.svg');
+                                                $iconContent = file_get_contents($iconPath);
+                                            ?>
+                                            <label class="icon-option">
+                                                <input type="radio" name="selected_icon" value="{{ $iconName }}" class="d-none">
+                                                <div class="icon">
+                                                    {!! $iconContent !!}
+                                                </div>
+                                                <div class="icon-name">{{ $iconName }}</div>
+                                            </label>
+                                        @endforeach
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Select Type</label>
@@ -205,8 +251,22 @@
                                         placeholder="Enter Sub Heading" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="iconSelectUpdate">Select Icon</label>                                    
-                                    <input type="file" name="icon" id="iconSelectUpdate" accept=".svg">
+                                    <label for="iconSelectUpdate">Select Icon</label>
+                                    <div class="icon-select">
+                                        @foreach(glob(public_path('icons/*.svg')) as $iconPath)
+                                            <?php
+                                                $iconName = basename($iconPath, '.svg');
+                                                $iconContent = file_get_contents($iconPath);
+                                            ?>
+                                            <label class="icon-option">
+                                                <input type="radio" name="selected_icon" value="{{ $iconName }}" class="d-none">
+                                                <div class="icon">
+                                                    {!! $iconContent !!}
+                                                </div>
+                                                <div class="icon-name">{{ $iconName }}</div>
+                                            </label>
+                                        @endforeach
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Select Type</label>
@@ -245,10 +305,20 @@
 @section('scripts')
 
 <script>
+    $(document).ready(function() {
+    $('.icon-option').click(function() {
+        $('.icon-option').removeClass('selected');
+        $(this).addClass('selected');
+    });
+});
+</script>
+
+<script>
     var baseUrl = "{{ url('/') }}"
 
     async function editor(occupation,profession,criteria,icon,id,heading,sub_heading,type,questions)
     {
+        alert(icon)
         await showQuestions(JSON.parse(questions))
         await getProfessions(occupation)
         $('#onBoardingIdUpdate').val(id)
