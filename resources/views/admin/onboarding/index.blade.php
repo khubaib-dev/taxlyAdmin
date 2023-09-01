@@ -318,7 +318,6 @@
 
     async function editor(occupation,profession,criteria,icon,id,heading,sub_heading,type,questions)
     {
-        alert(icon)
         await showQuestions(JSON.parse(questions))
         await getProfessions(occupation)
         $('#onBoardingIdUpdate').val(id)
