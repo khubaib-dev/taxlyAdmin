@@ -272,9 +272,9 @@
     }
 
     function generateProfessionSelectUpdate(professions,reload)
-    {
+    { 
         const selectElement = document.getElementById("selectedProfessionUpdate");
-        if(reload)
+        if(reload || professions.length == 0)
         {
             while (selectElement.options.length > 0) {
                 selectElement.remove(0);
@@ -361,6 +361,18 @@
     function generateProfessionSelect(professions)
     {
         const selectElement = document.getElementById("selectedProfession");
+        if(professions.length == 0)
+        {
+            while (selectElement.options.length > 0) {
+                selectElement.remove(0);
+            }
+            const option = document.createElement("option");
+            option.value = '';
+            option.textContent = 'Select Any Profession';
+            option.selected = true;
+            option.disabled = false;
+            selectElement.appendChild(option);
+        }
         professions.forEach(profession => {
             const option = document.createElement("option");
             option.value = profession.id;
@@ -376,6 +388,12 @@
 <script>
     var questionCounterUpdate = 0
     function showQuestions(questions){
+        const questionListUpdateDiv = document.getElementById("questionListUpdate");
+
+        while (questionListUpdateDiv.firstChild) {
+            questionListUpdateDiv.removeChild(questionListUpdateDiv.firstChild);
+        }
+        
         questionCounterUpdate = questions.length;
         
         questions.forEach((question) => {
@@ -390,12 +408,24 @@
             questionInput.value = question.label;
             questionInput.required = true;
 
-            const questionOrder = document.createElement("input");
-            questionOrder.type = "number";
+            const questionOrder = document.createElement("select");
             questionOrder.className = "form-control question-order-update";
             questionOrder.name = `question_order_${questionCounterUpdate}`;
-            questionOrder.value = question.order;
             questionOrder.required = true;
+
+            // Create option for "Yes"
+            const yesOption = document.createElement("option");
+            yesOption.value = 1;
+            yesOption.selected = (question.order == 1) ? true : false
+            yesOption.text = "Yes";
+            questionOrder.appendChild(yesOption);
+
+            // Create option for "No"
+            const noOption = document.createElement("option");
+            noOption.value = 0;
+            noOption.selected = (question.order == 0) ? true : false
+            noOption.text = "No";
+            questionOrder.appendChild(noOption)
             
             const deleteButton = document.createElement("button");
             deleteButton.className = "btn btn-danger";
@@ -450,12 +480,22 @@ function addQuestionUpdate() {
     questionInput.placeholder = "Enter your question...";
     questionInput.required = true;
 
-    const questionOrder = document.createElement("input");
-    questionOrder.type = "number";
+    const questionOrder = document.createElement("select");
     questionOrder.className = "form-control question-order-update";
     questionOrder.name = `question_order_${questionCounterUpdate}`;
-    questionOrder.placeholder = "Enter order number";
     questionOrder.required = true;
+
+    // Create option for "Yes"
+    const yesOption = document.createElement("option");
+    yesOption.value = 1;
+    yesOption.text = "Yes";
+    questionOrder.appendChild(yesOption);
+
+    // Create option for "No"
+    const noOption = document.createElement("option");
+    noOption.value = 0;
+    noOption.text = "No";
+    questionOrder.appendChild(noOption)
     
     const deleteButton = document.createElement("button");
     deleteButton.className = "btn btn-danger";
@@ -516,12 +556,22 @@ function addQuestion() {
     questionInput.placeholder = "Enter your question...";
     questionInput.required = true;
     
-    const questionOrder = document.createElement("input");
-    questionOrder.type = "number";
+    const questionOrder = document.createElement("select");
     questionOrder.className = "form-control question-order";
     questionOrder.name = `question_order_${questionCounter}`;
-    questionOrder.placeholder = "Enter order number";
     questionOrder.required = true;
+
+    // Create option for "Yes"
+    const yesOption = document.createElement("option");
+    yesOption.value = 1;
+    yesOption.text = "Yes";
+    questionOrder.appendChild(yesOption);
+
+    // Create option for "No"
+    const noOption = document.createElement("option");
+    noOption.value = 0;
+    noOption.text = "No";
+    questionOrder.appendChild(noOption)
     
     const deleteButton = document.createElement("button");
     deleteButton.className = "btn btn-danger";
