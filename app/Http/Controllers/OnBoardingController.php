@@ -47,7 +47,7 @@ class OnBoardingController extends Controller
         $filename = 'icon_' . time() . '.svg';
 
         // Specify the folder where you want to store the SVG files
-        $folder = 'files';
+        $folder = 'icons';
 
         // Store the SVG content as a file in the specified folder
         Storage::disk('local')->put($folder . '/' . $filename, $iconContent);
@@ -94,7 +94,7 @@ class OnBoardingController extends Controller
             $filename = 'icon_' . time() . '.svg';
 
             // Specify the folder where you want to store the SVG files
-            $folder = 'files';
+            $folder = 'icons';
 
             // Store the SVG content as a file in the specified folder
             Storage::disk('local')->put($folder . '/' . $filename, $iconContent);

@@ -32,6 +32,10 @@
 .icon-name {
     margin-left: 5px;
 }
+.scrollable{
+    max-height: 200px;
+    overflow-y: auto;
+}
 </style>
 @endsection
 
@@ -159,8 +163,8 @@
                                     <input type="text" name="sub_heading" id="onBoardingSubHeading" class="form-control"
                                         placeholder="Enter Sub Heading" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="iconSelect">Select Icon</label>                                    
+                                <label for="iconSelect">Select Icon</label>                                    
+                                <div class="form-group scrollable">
                                     <div class="icon-select">
                                         @foreach(glob(public_path('icons/*.svg')) as $iconPath)
                                             <?php
@@ -178,7 +182,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Select Type</label>
+                                    <label>Select Question Type</label>
                                     <br>
                                     <label for="checkbox">CheckBox</label>
                                     <input type="radio" name="type" id="checkbox" value="1" required>
@@ -250,8 +254,8 @@
                                     <input type="text" name="sub_heading" id="onBoardingSubHeadingUpdate" class="form-control"
                                         placeholder="Enter Sub Heading" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="iconSelectUpdate">Select Icon</label>
+                                <label for="iconSelectUpdate">Select Icon</label>
+                                <div class="form-group scrollable">
                                     <div class="icon-select">
                                         @foreach(glob(public_path('icons/*.svg')) as $iconPath)
                                             <?php
@@ -269,7 +273,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Select Type</label>
+                                    <label>Select Question Type</label>
                                     <br>
                                     <label for="checkboxUpdate">CheckBox</label>
                                     <input type="radio" name="type" id="checkboxUpdate" value="1" required>
