@@ -434,8 +434,8 @@
     function generateProfessionSelect(professions)
     {
         const selectElement = document.getElementById("selectedProfession");
-        if(professions.length == 0)
-        {
+        // if(professions.length == 0)
+        // {
             while (selectElement.options.length > 0) {
                 selectElement.remove(0);
             }
@@ -445,7 +445,7 @@
             option.selected = true;
             option.disabled = false;
             selectElement.appendChild(option);
-        }
+        // }
         professions.forEach(profession => {
             const option = document.createElement("option");
             option.value = profession.id;
