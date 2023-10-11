@@ -126,82 +126,98 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="{{ route('addOnBoarding') }}" method="post" class="p-1" enctype="multipart/form-data">
-                                @csrf
-                                <div class="form-group">
-                                    <label>Select Occupation</label>
-                                    <select class="form-control" id="selectedOccupation" name="occupation" required>
-                                        <option value="" selected disabled>Select Any Occupation</option>
-                                        @foreach ($occupations as $occupation)
-                                        <option value="{{ $occupation->id }}">{{ $occupation->name }}</option>
-                                        @endforeach
-                                    </select>
+                            <div class="row my-2">
+                                <div class="col-6">
+                                    <button id="singleOnBoard" class="btn btn-primary d-block mx-auto">Add Single</button>
                                 </div>
-                                <div class="form-group">
-                                    <label>Select Profession</label>
-                                    <select class="form-control" id="selectedProfession" name="profession">
-                                        <option value="" selected >Select Any Profession</option>
-                                        
-                                    </select>
+                                <div class="col-6">
+                                    <button id="csvOnBoard" class="btn btn-success d-block mx-auto">Add CSV</button>
                                 </div>
+                            </div>
+                            <div id="csvRecord" class="d-none mx-1">
                                 <div class="form-group">
-                                    <label>Select Criteria</label>
-                                    <select class="form-control" id="selectedCriteria" name="criteria" required>
-                                        <option value="" selected disabled>Select Any Criteria</option>
-                                        @foreach ($criterias as $criteria)
-                                        <option value="{{ $criteria->id }}">{{ $criteria->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="csvFile">Select CSV File</label>
+                                    <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="fileOnBoard" id="csvFile" class="form-control btn" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="onBoardingHeading">OnBoarding Heading</label>
-                                    <input type="text" name="heading" id="onBoardingHeading" class="form-control"
-                                        placeholder="Enter Heading" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="onBoardingSubHeading">OnBoarding Sub Heading</label>
-                                    <input type="text" name="sub_heading" id="onBoardingSubHeading" class="form-control"
-                                        placeholder="Enter Sub Heading" required>
-                                </div>
-                                <label for="iconSelect">Select Icon</label>                                    
-                                <div class="form-group scrollable">
-                                    <div class="icon-select">
-                                        @foreach(glob(public_path('icons/*.svg')) as $iconPath)
-                                            <?php
-                                                $iconName = basename($iconPath, '.svg');
-                                                $iconContent = file_get_contents($iconPath);
-                                            ?>
-                                            <label class="icon-option">
-                                                <input type="radio" name="selected_icon" value="{{ $iconName }}" class="d-none">
-                                                <div class="icon">
-                                                    {!! $iconContent !!}
-                                                </div>
-                                                <div class="icon-name">{{ $iconName }}</div>
-                                            </label>
-                                        @endforeach
+                            </div>
+                            <div id="singleRecord">
+                                <form action="{{ route('addOnBoarding') }}" method="post" class="p-1" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label>Select Occupation</label>
+                                        <select class="form-control" id="selectedOccupation" name="occupation" required>
+                                            <option value="" selected disabled>Select Any Occupation</option>
+                                            @foreach ($occupations as $occupation)
+                                            <option value="{{ $occupation->id }}">{{ $occupation->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label>Select Question Type</label>
-                                    <br>
-                                    <label for="checkbox">CheckBox</label>
-                                    <input type="radio" name="type" id="checkbox" value="1" required>
-                                    <label for="radio">Radio</label>
-                                    <input type="radio" name="type" id="radio" value="0" required>
-                                </div>
-                                <hr>
-                                <div class="row p-2">
-                                    <h6>Add Questions</h6>
-                                    <button type="button" id="addQuestionBtn" class="btn btn-primary ml-auto">Add
-                                        Question</button>
-                                </div>
-                                <input type="hidden" id="total_questions" name="total_questions">
-                                <div id="questionList" class="mt-3"></div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Add</button>
-                                </div>
-                            </form>
+                                    <div class="form-group">
+                                        <label>Select Profession</label>
+                                        <select class="form-control" id="selectedProfession" name="profession">
+                                            <option value="" selected >Select Any Profession</option>
+                                            
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Select Criteria</label>
+                                        <select class="form-control" id="selectedCriteria" name="criteria" required>
+                                            <option value="" selected disabled>Select Any Criteria</option>
+                                            @foreach ($criterias as $criteria)
+                                            <option value="{{ $criteria->id }}">{{ $criteria->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="onBoardingHeading">OnBoarding Heading</label>
+                                        <input type="text" name="heading" id="onBoardingHeading" class="form-control"
+                                            placeholder="Enter Heading" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="onBoardingSubHeading">OnBoarding Sub Heading</label>
+                                        <input type="text" name="sub_heading" id="onBoardingSubHeading" class="form-control"
+                                            placeholder="Enter Sub Heading" required>
+                                    </div>
+                                    <label for="iconSelect">Select Icon</label>                                    
+                                    <div class="form-group scrollable">
+                                        <div class="icon-select">
+                                            @foreach(glob(public_path('icons/*.svg')) as $iconPath)
+                                                <?php
+                                                    $iconName = basename($iconPath, '.svg');
+                                                    $iconContent = file_get_contents($iconPath);
+                                                ?>
+                                                <label class="icon-option">
+                                                    <input type="radio" name="selected_icon" value="{{ $iconName }}" class="d-none">
+                                                    <div class="icon">
+                                                        {!! $iconContent !!}
+                                                    </div>
+                                                    <div class="icon-name">{{ $iconName }}</div>
+                                                </label>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Select Question Type</label>
+                                        <br>
+                                        <label for="checkbox">CheckBox</label>
+                                        <input type="radio" name="type" id="checkbox" value="1" required>
+                                        <label for="radio">Radio</label>
+                                        <input type="radio" name="type" id="radio" value="0" required>
+                                    </div>
+                                    <hr>
+                                    <div class="row p-2">
+                                        <h6>Add Questions</h6>
+                                        <button type="button" id="addQuestionBtn" class="btn btn-primary ml-auto">Add
+                                            Question</button>
+                                    </div>
+                                    <input type="hidden" id="total_questions" name="total_questions">
+                                    <div id="questionList" class="mt-3"></div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Add</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -307,6 +323,18 @@
 @endsection
 
 @section('scripts')
+
+<script>
+    $('#csvOnBoard').click(function() {
+        $('#csvRecord').removeClass('d-none')
+        $('#singleRecord').addClass('d-none')
+    })
+    
+    $('#singleOnBoard').click(function() {
+        $('#csvRecord').addClass('d-none')
+        $('#singleRecord').removeClass('d-none')
+    })
+</script>
 
 <script>
     $(document).ready(function() {
